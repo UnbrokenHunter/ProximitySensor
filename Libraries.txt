@@ -1,0 +1,7 @@
+Sensor
+pip install RPi.GPIO
+pip install spidev
+pip install Adafruit_GPIO
+
+GUI
+pip3 install customtkinter
