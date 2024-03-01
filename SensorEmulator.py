@@ -15,7 +15,7 @@ def ReadData():
         trackPosition = trackPosition % trackLength
 
         # Read the sensor output
-        value = trackPosition > 398
+        value = trackPosition > trackLength - 2
 
         # if value:
         #      print("No object detected")

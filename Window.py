@@ -5,22 +5,11 @@ import SensorEmulator
 import threading
 import time
 
-def FormatTime(time):
-    # Extract whole seconds and milliseconds
-    seconds = int(time)
-    milliseconds = int((time - seconds) * 1000)
-    
-    # Compute hours, minutes, and seconds
-    seconds = seconds % (24 * 3600)
-    hour = seconds // 3600
-    seconds %= 3600
-    minutes = seconds // 60
-    seconds %= 60
-    
-    # Return formatted time string including milliseconds
-    return "%d:%02d:%02d.%03d" % (hour, minutes, seconds, milliseconds)
-
 class ButtonFrame(tk.CTkFrame):
+    def LapFilters(self):
+        Globals.LapFilters = not Globals.LapFilters
+        print("Lap Filters: ", Globals.LapFilters)
+
     def EnableTracking(self):
         Globals.TrackingEnabled = not Globals.TrackingEnabled
         print("Enable Tracking: ", Globals.TrackingEnabled)
@@ -40,16 +29,20 @@ class ButtonFrame(tk.CTkFrame):
 
         self.enableTracking = tk.CTkCheckBox(master=self, text="Enable Tracking", command=self.EnableTracking, height=50, font=("Helvetica", 20))
         self.enableTracking.select()
-        self.enableTracking.grid(row=1, column=0, padx=(10, 10), pady=30, sticky="ew")
+        self.enableTracking.grid(row=1, column=0, padx=(10, 10), pady=10, sticky="ew")
+
+        self.lapFilters = tk.CTkCheckBox(master=self, text="Lap Filters", command=self.LapFilters, height=50, font=("Helvetica", 20))
+        self.lapFilters.select()
+        self.lapFilters.grid(row=2, column=0, padx=(10, 10), pady=10, sticky="ew")
 
         self.driverLabel = tk.CTkLabel(master=self, text="Current Driver: ", font=("Helvetica", 20))
-        self.driverLabel.grid(row=2, column=0, padx=(10, 10), pady=(30, 3), sticky="ew")
+        self.driverLabel.grid(row=3, column=0, padx=(10, 10), pady=(10, 3), sticky="ew")
         
         self.driver = tk.CTkComboBox(master=self, 
                                      values=["Mac", "Mitchell", "Josh", "Hunter", "John Walter"],
                                      command=self.SetDriver)
         self.driver.set("None") 
-        self.driver.grid(row=3, column=0, padx=(10, 10), pady=(3, 30), sticky="ew")
+        self.driver.grid(row=4, column=0, padx=(10, 10), pady=(3, 30), sticky="ew")
 
 
 class Scrollable(tk.CTkScrollableFrame):
@@ -130,11 +123,11 @@ class DataFrame(tk.CTkFrame):
                     self.scrollable.addItem(Globals.LapCount, 
                                             Statistics.GetCurrentDriver(), 
                                             str(round(Statistics.GetDistanceDriven(), 2)), 
-                                            FormatTime(Statistics.GetLastLapTime()))
+                                            Globals.FormatTime(Statistics.GetLastLapTime()))
                     
-                self.time.configure(text=FormatTime(time.time() - Globals.StartTime))
-                self.averageLapTime.configure(text=FormatTime(Statistics.GetAverageLapTime()))
-                self.projectedEndTime.configure(text=FormatTime(Statistics.GetProjectedEndTime()))
+                self.time.configure(text=Globals.FormatTime(time.time() - Globals.StartTime))
+                self.averageLapTime.configure(text=Globals.FormatTime(Statistics.GetAverageLapTime()))
+                self.projectedEndTime.configure(text=Globals.FormatTime(Statistics.GetProjectedEndTime()))
 
                 time.sleep(0.5)  # Delay for half a second
 

@@ -12,8 +12,15 @@ def SaveLap():
     global speedTrackerTimer
 
     # Lap Count Is Calculated Based on Spreadsheet Row 
+
+    # Lap is probably not accurate
+    lapTime = (time.time() - lapStartTime)
+    if lapTime < Globals.MinLapTime:
+        print(f"Lap with time of {Globals.FormatTime(lapTime)} likely fraudulent. It has been disqualified.")
+        return
+
     # Calculate Lap Time
-    Globals.LastLapTime = (time.time() - lapStartTime)
+    Globals.LastLapTime = lapTime
 
     # Calculate Instant Speed
     InstantSpeed = (time.time() - speedTrackerTimer)
