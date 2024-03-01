@@ -8,10 +8,10 @@ def ReadData():
         # Read the sensor output
         value = random.randint(0, 10000) < 9900
 
-        if value:
-             print("No object detected")
-        else:
-            print("Object detected")
+        # if value:
+        #      print("No object detected")
+        # else:
+        #     print("Object detected")
 
         ProccessSensorData.SensorData(value)
 

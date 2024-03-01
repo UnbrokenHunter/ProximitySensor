@@ -37,7 +37,7 @@ def update_cell(sheet_name, row_number, column_letter, new_value):
     cell_reference = f"{column_letter}{row_number + 1}"
     sheet[cell_reference] = new_value
     wb.save(SPREADSHEET_FILE_PATH)
-    print(f"Updated cell {cell_reference}.")
+    print(f"Updated local cell {cell_reference}.")
 
 def SaveData(LapTime, InstantSpeed):
     try:
