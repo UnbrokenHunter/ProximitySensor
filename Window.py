@@ -39,7 +39,7 @@ class ButtonFrame(tk.CTkFrame):
         self.driverLabel.grid(row=3, column=0, padx=(10, 10), pady=(10, 3), sticky="ew")
         
         self.driver = tk.CTkComboBox(master=self, 
-                                     values=["Mac", "Mitchell", "Josh", "Hunter", "John Walter"],
+                                     values=Globals.Drivers,
                                      command=self.SetDriver)
         self.driver.set("None") 
         self.driver.grid(row=4, column=0, padx=(10, 10), pady=(3, 30), sticky="ew")

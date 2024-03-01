@@ -20,6 +20,7 @@ LapFilters = True
 MinLapTime = 10
 
 CurrentDriver = "None"
+Drivers = ["Mac", "Mitchell", "Josh", "Hunter", "John Walter"]
 LapCount = 0
 LastLapTime = 0
 
