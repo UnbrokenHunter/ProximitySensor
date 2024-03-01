@@ -1,6 +1,7 @@
 import time
 import Globals
 import Sheets
+import LocalSheets
 
 previousValue = False
 lapStartTime = time.time()
@@ -21,14 +22,12 @@ def SaveLap():
         Sheets.SaveData(Globals.LastLapTime, InstantSpeed)
     except Exception as err:
         print("Error Saving Sheet Data")
+        #print(f"There was an error saving the data to a sheet.\nThe Last Lap was {Globals.LastLapTime}\n Instant Speed: {InstantSpeed}")
 
         # Update Lap Count Because Digital save is unreachable
         Globals.LapCount += 1
 
-
-        #print(f"There was an error saving the data to a sheet.\nThe Last Lap was {Globals.LastLapTime}\n Instant Speed: {InstantSpeed}")
-
-    print("Lap Saved: ", Globals.LastLapTime)
+    LocalSheets.SaveData(Globals.LastLapTime, InstantSpeed)
 
     lapStartTime = time.time()
 
