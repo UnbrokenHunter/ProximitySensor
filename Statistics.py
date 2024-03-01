@@ -1,12 +1,20 @@
+import Globals
+import time
+
 def GetDistanceDriven():
-    return "10"
+    trackLength = 0.4 # 0.4km
+    return Globals.LapCount * trackLength
         
 def GetLapCount():
-    return "10"
+    return Globals.LapCount
                 
 def GetLastLapTime():
-    return "10"
+    return Globals.LastLapTime
         
 def GetAverageLapTime():
-    return "10"
+    return GetLapCount() / (time.time() - Globals.StartTime)
         
+def GetCurrentDriver():
+    return Globals.CurrentDriver
+
+print("Stats Initalized")
