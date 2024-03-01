@@ -52,34 +52,38 @@ class Scrollable(tk.CTkScrollableFrame):
 
     def addItem(self, LapCount, Driver, DistanceDriven, LastLapTime):
             size = 13
+            padding = 7
+
+            self.titleFrame = tk.CTkFrame(master=self)
+            self.titleFrame.pack(fill="x", padx=(10, 10), pady=5)
 
             # Lap Count
-            lapCountLabel = tk.CTkLabel(master=self, text="Lap Count:", justify="left", anchor="w", font=("Helvetica", size))
-            lapCountLabel.grid(row=(LapCount * 2), column=0, padx=(3, 3), pady=(3, 0), sticky="ew")
+            self.titleFrame.lapCountLabel = tk.CTkLabel(master=self.titleFrame, text="Lap Count:", justify="left", anchor="w", font=("Helvetica", size))
+            self.titleFrame.lapCountLabel.grid(row=(LapCount * 2), column=0, padx=padding, pady=(3, 0), sticky="ew")
 
-            lapCount = tk.CTkLabel(master=self, text=f"{LapCount}", justify="left", anchor="e", font=("Helvetica", size))
-            lapCount.grid(row=(LapCount * 2) + 1, column=0, padx=(3, 3), pady=(0, 3), sticky="ew")
+            self.titleFrame.lapCount = tk.CTkLabel(master=self.titleFrame, text=f"{LapCount}", justify="left", anchor="w", font=("Helvetica", size))
+            self.titleFrame.lapCount.grid(row=(LapCount * 2) + 1, column=0, padx=padding, pady=(0, 3), sticky="ew")
 
             # Driver
-            lapCountLabel = tk.CTkLabel(master=self, text="Driver:", justify="left", anchor="w", font=("Helvetica", size))
-            lapCountLabel.grid(row=(LapCount * 2), column=1, padx=(3, 3), pady=(3, 0), sticky="ew")
+            self.titleFrame.lapCountLabel = tk.CTkLabel(master=self.titleFrame, text="Driver:", justify="left", anchor="w", font=("Helvetica", size))
+            self.titleFrame.lapCountLabel.grid(row=(LapCount * 2), column=1, padx=padding, pady=(3, 0), sticky="ew")
 
-            lapCount = tk.CTkLabel(master=self, text=f"{Driver}", justify="left", anchor="e", font=("Helvetica", size))
-            lapCount.grid(row=(LapCount * 2) + 1, column=1, padx=(3, 3), pady=(0, 3), sticky="ew")
+            self.titleFrame.lapCount = tk.CTkLabel(master=self.titleFrame, text=f"{Driver}", justify="left", anchor="w", font=("Helvetica", size))
+            self.titleFrame.lapCount.grid(row=(LapCount * 2) + 1, column=1, padx=padding, pady=(0, 3), sticky="ew")
 
             # Distance Driven
-            distanceDrivenLabel = tk.CTkLabel(master=self, text="Distance Driven:", justify="left", anchor="w", font=("Helvetica", size))
-            distanceDrivenLabel.grid(row=(LapCount * 2), column=2, padx=(3, 3), pady=(3, 0), sticky="ew")
+            self.titleFrame.distanceDrivenLabel = tk.CTkLabel(master=self.titleFrame, text="Distance:", justify="left", anchor="w", font=("Helvetica", size))
+            self.titleFrame.distanceDrivenLabel.grid(row=(LapCount * 2), column=2, padx=padding, pady=(3, 0), sticky="ew")
 
-            distanceDriven = tk.CTkLabel(master=self, text=f"{DistanceDriven}", justify="left", anchor="e", font=("Helvetica", size))
-            distanceDriven.grid(row=(LapCount * 2) + 1, column=2, padx=(3, 3), pady=(0, 3), sticky="ew")
+            self.titleFrame.distanceDriven = tk.CTkLabel(master=self.titleFrame, text=f"{DistanceDriven}", justify="left", anchor="w", font=("Helvetica", size))
+            self.titleFrame.distanceDriven.grid(row=(LapCount * 2) + 1, column=2, padx=padding, pady=(0, 3), sticky="ew")
 
             # Last Lap Time
-            lastLapTimeLabel = tk.CTkLabel(master=self, text="Lap Time:", justify="left", anchor="w", font=("Helvetica", size))
-            lastLapTimeLabel.grid(row=(LapCount * 2), column=3, padx=(7, 3), pady=(3, 0), sticky="ew")
+            self.titleFrame.lastLapTimeLabel = tk.CTkLabel(master=self.titleFrame, text="Lap Time:", justify="left", anchor="w", font=("Helvetica", size))
+            self.titleFrame.lastLapTimeLabel.grid(row=(LapCount * 2), column=3, padx=padding, pady=(3, 0), sticky="ew")
 
-            lastLapTime = tk.CTkLabel(master=self, text=f"{LastLapTime}", justify="left", anchor="e", font=("Helvetica", size))
-            lastLapTime.grid(row=(LapCount * 2) + 1, column=3, padx=(7, 3), pady=(0, 3), sticky="ew")
+            self.titleFrame.lastLapTime = tk.CTkLabel(master=self.titleFrame, text=f"{LastLapTime}", justify="left", anchor="w", font=("Helvetica", size))
+            self.titleFrame.lastLapTime.grid(row=(LapCount * 2) + 1, column=3, padx=padding, pady=(0, 3), sticky="ew")
 
 
 class DataFrame(tk.CTkFrame):   
