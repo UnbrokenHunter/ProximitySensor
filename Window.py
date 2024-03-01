@@ -58,34 +58,36 @@ class Scrollable(tk.CTkScrollableFrame):
         super().__init__(master, **kwargs)
 
     def addItem(self, LapCount, Driver, DistanceDriven, LastLapTime):
+            
+            size = 13
+
             # Lap Count
-            lapCountLabel = tk.CTkLabel(master=self, text="Lap Count:", justify="left", anchor="w", font=("Helvetica", 10))
+            lapCountLabel = tk.CTkLabel(master=self, text="Lap Count:", justify="left", anchor="w", font=("Helvetica", size))
             lapCountLabel.grid(row=(LapCount * 2), column=0, padx=(3, 3), pady=(3, 0), sticky="ew")
 
-            lapCount = tk.CTkLabel(master=self, text=f"{LapCount}", justify="left", anchor="e", font=("Helvetica", 10))
+            lapCount = tk.CTkLabel(master=self, text=f"{LapCount}", justify="left", anchor="e", font=("Helvetica", size))
             lapCount.grid(row=(LapCount * 2) + 1, column=0, padx=(3, 3), pady=(0, 3), sticky="ew")
 
             # Driver
-            lapCountLabel = tk.CTkLabel(master=self, text="Driver:", justify="left", anchor="w", font=("Helvetica", 10))
+            lapCountLabel = tk.CTkLabel(master=self, text="Driver:", justify="left", anchor="w", font=("Helvetica", size))
             lapCountLabel.grid(row=(LapCount * 2), column=1, padx=(3, 3), pady=(3, 0), sticky="ew")
 
-            lapCount = tk.CTkLabel(master=self, text=f"{Driver}", justify="left", anchor="e", font=("Helvetica", 10))
+            lapCount = tk.CTkLabel(master=self, text=f"{Driver}", justify="left", anchor="e", font=("Helvetica", size))
             lapCount.grid(row=(LapCount * 2) + 1, column=1, padx=(3, 3), pady=(0, 3), sticky="ew")
 
             # Distance Driven
-            distanceDrivenLabel = tk.CTkLabel(master=self, text="Distance Driven:", justify="left", anchor="w", font=("Helvetica", 10))
+            distanceDrivenLabel = tk.CTkLabel(master=self, text="Distance Driven:", justify="left", anchor="w", font=("Helvetica", size))
             distanceDrivenLabel.grid(row=(LapCount * 2), column=2, padx=(3, 3), pady=(3, 0), sticky="ew")
 
-            distanceDriven = tk.CTkLabel(master=self, text=f"{DistanceDriven}", justify="left", anchor="e", font=("Helvetica", 10))
+            distanceDriven = tk.CTkLabel(master=self, text=f"{DistanceDriven}", justify="left", anchor="e", font=("Helvetica", size))
             distanceDriven.grid(row=(LapCount * 2) + 1, column=2, padx=(3, 3), pady=(0, 3), sticky="ew")
 
             # Last Lap Time
-            lastLapTimeLabel = tk.CTkLabel(master=self, text="Last Lap:", justify="left", anchor="w", font=("Helvetica", 10))
+            lastLapTimeLabel = tk.CTkLabel(master=self, text="Last Lap:", justify="left", anchor="w", font=("Helvetica", size))
             lastLapTimeLabel.grid(row=(LapCount * 2), column=3, padx=(7, 3), pady=(3, 0), sticky="ew")
 
-            lastLapTime = tk.CTkLabel(master=self, text=f"{LastLapTime}", justify="left", anchor="e", font=("Helvetica", 10))
+            lastLapTime = tk.CTkLabel(master=self, text=f"{LastLapTime}", justify="left", anchor="e", font=("Helvetica", size))
             lastLapTime.grid(row=(LapCount * 2) + 1, column=3, padx=(7, 3), pady=(0, 3), sticky="ew")
-
 
 
 class DataFrame(tk.CTkFrame):   
@@ -126,8 +128,11 @@ class DataFrame(tk.CTkFrame):
             while True:
                 if self.LapCount != Globals.LapCount:
                     self.LapCount += 1
-                    self.scrollable.addItem(Globals.LapCount, Statistics.GetCurrentDriver(), str(round(Statistics.GetDistanceDriven(), 2)), FormatTime(Statistics.GetLastLapTime()))
-
+                    self.scrollable.addItem(Globals.LapCount, 
+                                            Statistics.GetCurrentDriver(), 
+                                            str(round(Statistics.GetDistanceDriven(), 2)), 
+                                            FormatTime(Statistics.GetLastLapTime()))
+                    
                 self.time.configure(text=FormatTime(time.time() - Globals.StartTime))
                 self.averageLapTime.configure(text=FormatTime(Statistics.GetAverageLapTime()))
                 self.projectedEndTime.configure(text=FormatTime(Statistics.GetProjectedEndTime()))
