@@ -11,3 +11,6 @@ pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-
 
 Local Sheets
 pip install openpyxl
+
+All:
+pip install --upgrade RPi.GPIO spidev Adafruit_GPIO customtkinter google-api-python-client google-auth-httplib2 google-auth-oauthlib openpyxl
