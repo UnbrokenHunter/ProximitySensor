@@ -58,7 +58,6 @@ class Scrollable(tk.CTkScrollableFrame):
         super().__init__(master, **kwargs)
 
     def addItem(self, LapCount, Driver, DistanceDriven, LastLapTime):
-            
             size = 13
 
             # Lap Count
@@ -83,7 +82,7 @@ class Scrollable(tk.CTkScrollableFrame):
             distanceDriven.grid(row=(LapCount * 2) + 1, column=2, padx=(3, 3), pady=(0, 3), sticky="ew")
 
             # Last Lap Time
-            lastLapTimeLabel = tk.CTkLabel(master=self, text="Last Lap:", justify="left", anchor="w", font=("Helvetica", size))
+            lastLapTimeLabel = tk.CTkLabel(master=self, text="Lap Time:", justify="left", anchor="w", font=("Helvetica", size))
             lastLapTimeLabel.grid(row=(LapCount * 2), column=3, padx=(7, 3), pady=(3, 0), sticky="ew")
 
             lastLapTime = tk.CTkLabel(master=self, text=f"{LastLapTime}", justify="left", anchor="e", font=("Helvetica", size))

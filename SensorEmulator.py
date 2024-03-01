@@ -4,9 +4,18 @@ import random
 import ProccessSensorData
 
 def ReadData():
+
+    trackPosition = 0
+    trackLength = 400
+
     while True:
+
+        trackPosition += random.random() * 1.5
+
+        trackPosition = trackPosition % trackLength
+
         # Read the sensor output
-        value = random.randint(0, 10000) < 9900
+        value = trackPosition > 398
 
         # if value:
         #      print("No object detected")
