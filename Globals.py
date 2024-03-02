@@ -24,6 +24,9 @@ Drivers = ["Mac", "Mitchell", "Josh", "Hunter", "John Walter"]
 LapCount = 0
 LastLapTime = 0
 
+DebugMode = False
+Simulated = False
+
 # Statics
 StartTime = time.time()
 CarLength = 0.2 # Meters

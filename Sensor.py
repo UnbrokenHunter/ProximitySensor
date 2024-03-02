@@ -1,34 +1,41 @@
-import RPi.GPIO as GPIO
 import time
 import threading
 import ProccessSensorData
+import Globals
+try:
+    import RPi.GPIO as GPIO
+except ModuleNotFoundError as err:
+    print("RPi Module not found") 
 
 def ReadData():
-    # Set the GPIO mode
-    GPIO.setmode(GPIO.BCM)
-
-    # Replace 4 with the GPIO pin number you've connected your sensor to
     pin = 4
 
-    # Set up the GPIO pin as an input
-    GPIO.setup(pin, GPIO.IN)
+    try:
+        # Set the GPIO mode
+        GPIO.setmode(GPIO.BCM)
+
+        # Set up the GPIO pin as an input
+        GPIO.setup(pin, GPIO.IN)
+    except NameError as err:
+        print("name 'GPIO' is not defined") 
 
     while True:
-        try:
-            # Read the sensor output
-            value = GPIO.input(pin)
+        if Globals.Simulated:
+            try:
+                # Read the sensor output
+                value = GPIO.input(pin)
 
-            if value:
-                print("No object detected")
-            else:
-                print("Object detected")
+                if value:
+                    print("No object detected")
+                else:
+                    print("Object detected")
 
-            ProccessSensorData.SensorData(value)
+                ProccessSensorData.SensorData(value)
 
-            time.sleep(0.1)  # Delay for half a second    
-        finally:
-            GPIO.cleanup()
+                time.sleep(0.1)  # Delay for half a second    
+            finally:
+                GPIO.cleanup()
 
-t1 = threading.Thread(target=ReadData)
+t1 = threading.Thread(target=ReadData, daemon=True)
 t1.start()
 
