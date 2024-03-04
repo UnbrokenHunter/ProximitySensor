@@ -24,11 +24,13 @@ Drivers = ["Mac", "Mitchell", "Josh", "Hunter", "John Walter"]
 LapCount = 0
 LastLapTime = 0
 
-DebugMode = False
-Simulated = False
-
 # Statics
 StartTime = time.time()
 CarLength = 0.2 # Meters
 TrackLength = 0.4 # 0.4km
 RecordRequirement = 825055 # Meters
+
+# Debug
+Simulated = False
+Pin = 4
+SensorDelay = 0.5

@@ -7,38 +7,42 @@ try:
 except ModuleNotFoundError as err:
     print("RPi Module not found") 
 
-def ReadData():
-    print("Sensor Data")
-    pin = 4
+localPin = 4
 
+# Set up the GPIO pin as an input
+def SetupPin(pin):
+    GPIO.setup(pin, GPIO.IN)
+
+def ReadData():
     try:
         # Set the GPIO mode
         GPIO.setmode(GPIO.BCM)
 
-        # Set up the GPIO pin as an input
-        GPIO.setup(pin, GPIO.IN)
+        SetupPin(Globals.Pin)
     except NameError as err:
         print("name 'GPIO' is not defined NameError") 
 
     while True:
+        global localPin
         if not Globals.Simulated:
+            print("Sensor")
             try:
-                # Read the sensor output
-                value = GPIO.input(pin)
+                if localPin != Globals.Pin:
+                    SetupPin(Globals.Pin)
 
-                if value:
-                    print("No object detected")
-                else:
-                    print("Object detected")
+                # Read the sensor output
+                value = GPIO.input(Globals.Pin)
 
                 ProccessSensorData.SensorData(value)
 
-                time.sleep(0.1)  # Delay for half a second   
+                time.sleep(Globals.SensorDelay)  # Delay for half a second   
                  
             finally:
                 GPIO.cleanup()
-                
-
-t1 = threading.Thread(target=ReadData, daemon=True)
-t1.start()
-
+        else:
+            return        
+      
+def Run():  
+    if not Globals.Simulated:
+        t1 = threading.Thread(target=ReadData, daemon=True)
+        t1.start()

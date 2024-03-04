@@ -5,12 +5,13 @@ import ProccessSensorData
 import Globals
 
 def ReadData():
-
     trackPosition = 0
     trackLength = 400
 
     while True:
         if (Globals.Simulated):
+            print("Emulator")
+
             trackPosition += random.random() * 1.5
 
             trackPosition = trackPosition % trackLength
@@ -18,16 +19,14 @@ def ReadData():
             # Read the sensor output
             value = trackPosition > trackLength - 2
 
-            # if value:
-            #      print("No object detected")
-            # else:
-            #     print("Object detected")
-
             ProccessSensorData.SensorData(value)
 
-            time.sleep(0.05)  # Delay for half a second
-    
+            time.sleep(Globals.SensorDelay)  # Delay for half a second
+        else:
+            return        
 
-t1 = threading.Thread(target=ReadData, daemon=True)
-t1.start()
+def Run():
+    if (Globals.Simulated):
+        t1 = threading.Thread(target=ReadData, daemon=True)
+        t1.start()
 
