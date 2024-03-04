@@ -33,4 +33,4 @@ RecordRequirement = 825055 # Meters
 # Debug
 Simulated = False
 Pin = 4
-SensorDelay = 0.5
+SensorDelay = 0.1

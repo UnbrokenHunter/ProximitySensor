@@ -1,7 +1,10 @@
 import threading
 import ProccessSensorData
 import Globals
-import RPi.GPIO as GPIO
+try:
+    import RPi.GPIO as GPIO
+except ModuleNotFoundError as err:
+    print("GPIO Not Found")
 
 localPin = -1
 

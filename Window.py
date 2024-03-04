@@ -2,7 +2,6 @@ import customtkinter as tk
 import TitleWindow
 import DataWindow
 import DebugWindow
-import Globals
 import Sensor
 
 class App(tk.CTk):
@@ -33,3 +32,4 @@ if __name__ == "__main__":
     app.mainloop()
 
     
+ 

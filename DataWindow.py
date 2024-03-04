@@ -51,12 +51,15 @@ class Frame(tk.CTkFrame):
         self.LapCount = 0
         padding = 10
 
-        # Time
-        self.timeLabel = tk.CTkLabel(master=self, text="Timer:", justify="left", anchor="w", font=("Helvetica", 40, "italic"))
-        self.timeLabel.pack(padx=padding, pady=(10, 3))
+        self.timeFrame = tk.CTkFrame(master=self)
+        self.timeFrame.pack(fill="both", padx=padding, pady=(3, 3))
 
-        self.time = tk.CTkLabel(master=self, text="None", justify="right", anchor="e", font=("Helvetica", 40, "italic"))
-        self.time.pack(padx=padding, pady=(5, 3))
+        # Time
+        self.timeLabel = tk.CTkLabel(master=self.timeFrame, text="Timer:", font=("Helvetica", 40, "italic"))
+        self.timeLabel.grid(row=0, column=0, padx=padding, pady=(5, 3))
+
+        self.time = tk.CTkLabel(master=self.timeFrame, text="None", font=("Helvetica", 40, "italic"))
+        self.time.grid(row=0, column=1, padx=padding, pady=(5, 3))
 
         self.frame = tk.CTkFrame(master=self)
         self.frame.pack(fill="both", padx=padding, pady=(3, 3))
