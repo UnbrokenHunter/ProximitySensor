@@ -13,13 +13,14 @@ def SaveLap():
 
     # Lap Count Is Calculated Based on Spreadsheet Row 
 
-    # Lap is probably not accurate
+    # Calculate Lap Time
     lapTime = (time.time() - lapStartTime)
+
+    # If __ then Lap is probably not accurate
     if lapTime < Globals.MinLapTime:
         print(f"Lap with time of {Globals.FormatTime(lapTime)} likely fraudulent. It has been disqualified.")
         return
 
-    # Calculate Lap Time
     Globals.LastLapTime = lapTime
 
     # Calculate Instant Speed
@@ -28,12 +29,10 @@ def SaveLap():
     try:
         Sheets.SaveData(Globals.LastLapTime, InstantSpeed)
     except Exception as err:
+        Globals.LapCount += 1 # Update Lap Count Because Digital save is unreachable
         print("Error Saving Sheet Data")
-        #print(f"There was an error saving the data to a sheet.\nThe Last Lap was {Globals.LastLapTime}\n Instant Speed: {InstantSpeed}")
 
-        # Update Lap Count Because Digital save is unreachable
-        Globals.LapCount += 1
-
+    # Always Update Local Save
     LocalSheets.SaveData(Globals.LastLapTime, InstantSpeed)
 
     lapStartTime = time.time()
@@ -55,10 +54,4 @@ def SensorData(value):
 
         previousValue = value
 
-
-def Test():
-    # Tests
-    for x in range(100):
-        value = x % 10 == 0
-        SensorData(value)
-        time.sleep(0.1)  # Delay for half a second
+        time.sleep(Globals.SensorDelay)

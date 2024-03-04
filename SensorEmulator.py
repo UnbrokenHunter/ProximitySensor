@@ -1,4 +1,3 @@
-import time
 import threading
 import random 
 import ProccessSensorData
@@ -10,8 +9,6 @@ def ReadData():
 
     while True:
         if (Globals.Simulated):
-            print("Emulator")
-
             trackPosition += random.random() * 1.5
 
             trackPosition = trackPosition % trackLength
@@ -21,7 +18,6 @@ def ReadData():
 
             ProccessSensorData.SensorData(value)
 
-            time.sleep(Globals.SensorDelay)  # Delay for half a second
         else:
             return        
 
