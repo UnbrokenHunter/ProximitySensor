@@ -13,15 +13,12 @@ def SaveLap():
 
     # Lap Count Is Calculated Based on Spreadsheet Row 
 
-    # Calculate Lap Time
-    lapTime = (time.time() - lapStartTime)
-
     # If __ then Lap is probably not accurate
-    if lapTime < Globals.MinLapTime:
-        print(f"Lap with time of {Globals.FormatTime(lapTime)} likely fraudulent. It has been disqualified.")
+    if Globals.CurrentLapTime < Globals.MinLapTime:
+        print(f"Lap with time of {Globals.FormatTime(Globals.CurrentLapTime)} likely fraudulent. It has been disqualified.")
         return
 
-    Globals.LastLapTime = lapTime
+    Globals.LastLapTime = Globals.CurrentLapTime
 
     # Calculate Instant Speed
     InstantSpeed = (time.time() - speedTrackerTimer)
@@ -43,6 +40,9 @@ def SensorData(value):
         global previousValue
         global lapStartTime
         global speedTrackerTimer
+
+        # Calculate Lap Time
+        Globals.CurrentLapTime = (time.time() - lapStartTime)
 
         # If was not active and now is (Entered Sensor)
         if value != previousValue and previousValue == False:

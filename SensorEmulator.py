@@ -5,7 +5,7 @@ import Globals
 
 def ReadData():
     trackPosition = 0
-    trackLength = 400
+    trackLength = 100
 
     while True:
         if (Globals.Simulated):
@@ -14,7 +14,7 @@ def ReadData():
             trackPosition = trackPosition % trackLength
 
             # Read the sensor output
-            value = trackPosition > trackLength - 2
+            value = trackPosition > trackLength - 4
 
             ProccessSensorData.SensorData(value)
 

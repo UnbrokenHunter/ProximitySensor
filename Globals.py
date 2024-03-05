@@ -15,6 +15,7 @@ def FormatTime(time):
     minutes = seconds // 60
     seconds %= 60
 
+
     # Return including days
     if days != 0:
         return "%d:%d:%02d:%02d.%03d" % (days, hour, minutes, seconds, milliseconds)
