@@ -5,7 +5,7 @@ import Globals
 
 def ReadData():
     trackPosition = 0
-    trackLength = 100
+    trackLength = 20
 
     while True:
         if (Globals.Simulated):
