@@ -25,7 +25,6 @@ class Frame(tk.CTkFrame):
 
     def CreateUI(self):
         self.titleFrame = tk.CTkFrame(master=self)
-        # Use columnspan=2 to make the titleFrame span across both columns
         self.titleFrame.grid(row=0, column=0, columnspan=2, padx=(10, 10), pady=7, sticky="ew")
 
         self.title = tk.CTkLabel(master=self.titleFrame, text="Debug:", justify="left", anchor="w",font=("Helvetica", 40, "italic", "normal"))

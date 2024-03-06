@@ -50,7 +50,7 @@ def get_service(timeout):
 def update_cell(range_name, new_value):
     """Updates a specific cell in a spreadsheet."""
     try:
-        service = get_service()
+        service = get_service(5)
         body = {'values': [[new_value]]}
         result = service.spreadsheets().values().update(
             spreadsheetId=SPREADSHEET_ID, range=range_name,
@@ -62,7 +62,7 @@ def update_cell(range_name, new_value):
 def get_values(range_name):
     """Retrieves the values of a specific cell or cell range from a spreadsheet."""
     try:
-        service = get_service()  # Make sure you have this function defined as in your initial code
+        service = get_service(5)  # Make sure you have this function defined as in your initial code
         result = service.spreadsheets().values().get(
             spreadsheetId=SPREADSHEET_ID, range=range_name).execute()
         values = result.get('values', [])
@@ -82,7 +82,7 @@ def get_values(range_name):
 def find_first_empty_cell_in_column(sheet_name):
     """Finds the first empty cell in the second column of a specified sheet."""
     try:
-        service = get_service()  # Ensure you have the get_service function as provided earlier
+        service = get_service(5)  # Ensure you have the get_service function as provided earlier
         column_letter = 'A'  # Assuming you are looking for the first empty cell in the second column
         range_name = f'{sheet_name}!{column_letter}:{column_letter}'
         
@@ -108,31 +108,34 @@ def find_first_empty_cell_in_column(sheet_name):
         print(err)
         return None
 
-def SaveData(LapTime, InstantSpeed):
+def SaveDataManual(LapCount, LapTime, Driver, DistanceDriven, InstantSpeed, Time):
     try:
         minRow = find_first_empty_cell_in_column("Sheet1")
 
         # Lap Count
-        update_cell(f"Sheet1!A{minRow}", Globals.LapCount)
+        update_cell(f"Sheet1!A{minRow}", LapCount)
 
         # Lap Time
         update_cell(f"Sheet1!B{minRow}", LapTime)
 
         # Driver Name
-        update_cell(f"Sheet1!C{minRow}", Globals.CurrentDriver)
+        update_cell(f"Sheet1!C{minRow}", Driver)
 
         # Distance Driven
-        update_cell(f"Sheet1!D{minRow}", f"{Statistics.GetDistanceDriven()}km")
+        update_cell(f"Sheet1!D{minRow}", f"{DistanceDriven}km")
 
         # Instant Speed
         update_cell(f"Sheet1!E{minRow}", f"{((Globals.CarLength / InstantSpeed) * 3600) * 0.621371192}") # From Car Length / Time To Drive that Distance to Km / H to Mph
 
         # Average Speed
-        update_cell(f"Sheet1!F{minRow}", f"{((Statistics.GetDistanceDriven() / LapTime) * 3600) * 0.621371192}") # From Km / S to Km / H to Mph
+        update_cell(f"Sheet1!F{minRow}", f"{((DistanceDriven / LapTime) * 3600) * 0.621371192}") # From Km / S to Km / H to Mph
 
         # Time
-        update_cell(f"Sheet1!G{minRow}", time.strftime())
-
+        update_cell(f"Sheet1!G{minRow}", Time)
 
     except HttpError as err:
         print(err)
+
+
+def SaveData(LapTime, InstantSpeed):
+    SaveDataManual(Globals.LapCount, LapTime, Globals.CurrentDriver, Statistics.GetDistanceDriven(), InstantSpeed, time.strftime("%Y-%m-%d %H:%M:%S"))

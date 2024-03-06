@@ -39,22 +39,22 @@ def update_cell(sheet_name, row_number, column_letter, new_value):
     wb.save(SPREADSHEET_FILE_PATH)
     print(f"Updated local cell {cell_reference}.")
 
-def SaveData(LapTime, InstantSpeed):
+def SaveDataManual(LapCount, LapTime, Driver, DistanceDriven, InstantSpeed, Time):
     try:
         sheet_name = "Sheet1"
         minRow = Globals.LapCount
 
         # Lap Count
-        update_cell(sheet_name, minRow, 'A', Globals.LapCount)
+        update_cell(sheet_name, minRow, 'A', LapCount)
 
         # Lap Time
         update_cell(sheet_name, minRow, 'B', LapTime)
 
         # Driver Name
-        update_cell(sheet_name, minRow, 'C', Globals.CurrentDriver)
+        update_cell(sheet_name, minRow, 'C', Driver)
 
         # Distance Driven
-        distance_driven = f"{Statistics.GetDistanceDriven()}km"
+        distance_driven = f"{DistanceDriven}km"
         update_cell(sheet_name, minRow, 'D', distance_driven)
 
         # Instant Speed
@@ -62,12 +62,15 @@ def SaveData(LapTime, InstantSpeed):
         update_cell(sheet_name, minRow, 'E', instant_speed_mph)
 
         # Average Speed
-        average_speed_mph = f"{((Statistics.GetDistanceDriven() / LapTime) * 3600) * 0.621371192}"  # From Km / S to Km / H to Mph
+        average_speed_mph = f"{((DistanceDriven / LapTime) * 3600) * 0.621371192}"  # From Km / S to Km / H to Mph
         update_cell(sheet_name, minRow, 'F', average_speed_mph)
 
         # Time
-        current_time = time.strftime("%Y-%m-%d %H:%M:%S")
-        update_cell(sheet_name, minRow, 'G', current_time)
+        update_cell(sheet_name, minRow, 'G', Time)
 
     except Exception as err:
         print(err)
+
+def SaveData(LapTime, InstantSpeed):
+    SaveDataManual(Globals.LapCount, LapTime, Globals.CurrentDriver, Statistics.GetDistanceDriven(), InstantSpeed, time.strftime("%Y-%m-%d %H:%M:%S"))
+
