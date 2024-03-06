@@ -35,7 +35,7 @@ class Frame(tk.CTkFrame):
         self.simulated.deselect()
         self.simulated.grid(row=1, column=0, columnspan=2, padx=10, pady=5, sticky="w")
 
-        self.pinEntry = tk.CTkEntry(master=self, placeholder_text="Pin", height=40, font=("Helvetica", 20))
+        self.pinEntry = tk.CTkEntry(master=self, placeholder_text=f"Pin: {Globals.Pin}", height=40, font=("Helvetica", 20))
         self.pinEntry.grid(row=2, column=0, padx=(10, 5), pady=5)
 
         self.pinButton = tk.CTkButton(master=self, text="Select Pin", command=self.Pin, height=40, font=("Helvetica", 20))
