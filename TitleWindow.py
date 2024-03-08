@@ -60,30 +60,30 @@ class Frame(tk.CTkFrame):
 
         padding = 10
 
-        self.addLapFrameLabel = tk.CTkLabel(master=self, text="Manual Add: ", justify="left", anchor="w", font=("Helvetica", 20))
-        self.addLapFrameLabel.grid(row=5, column=0, padx=10, pady=(6, 3), sticky="ew")
-
         self.addLapFrame = tk.CTkFrame(master=self)
-        self.addLapFrame.grid(row=6, column=0, columnspan=2, padx=10, pady=(3, 6), sticky="nsew")
+        self.addLapFrame.grid(row=5, column=0, columnspan=2, padx=10, pady=(3, 6), sticky="nsew")
 
         self.addLapFrame.grid_columnconfigure(0, weight=1)
         self.addLapFrame.grid_columnconfigure(1, weight=1)
 
+        self.addLapFrameLabel = tk.CTkLabel(master=self.addLapFrame, text="Manual Add: ", justify="left", anchor="w", font=("Helvetica", 20))
+        self.addLapFrameLabel.grid(row=0, column=0, padx=10, pady=(6, 3), sticky="ew", columnspan=2)
+
         self.lapCount = tk.CTkEntry(master=self.addLapFrame, placeholder_text="Description: ", font=("Helvetica", 20))
-        self.lapCount.grid(row=0, column=0, padx=padding, pady=7)
+        self.lapCount.grid(row=1, column=0, padx=padding, pady=7, sticky="ew")
 
         self.manualDriver = tk.CTkComboBox(master=self.addLapFrame, 
                                      values=Globals.Drivers,
                                      command=self.SetManualDriver)
-        self.manualDriver.grid(row=0, column=1, padx=padding, pady=7)
+        self.manualDriver.grid(row=1, column=1, padx=padding, pady=7, sticky="ew")
 
         self.lapTime = tk.CTkEntry(master=self.addLapFrame, placeholder_text="Lap Time: ", font=("Helvetica", 20))
-        self.lapTime.grid(row=1, column=0, padx=padding, pady=7)
+        self.lapTime.grid(row=2, column=0, padx=padding, pady=7, sticky="ew")
 
         self.distanceDriven= tk.CTkEntry(master=self.addLapFrame, placeholder_text="Distance Drive (km): ", font=("Helvetica", 20))
-        self.distanceDriven.grid(row=1, column=1, padx=padding, pady=7)
+        self.distanceDriven.grid(row=2, column=1, padx=padding, pady=(4, 5), sticky="ew")
 
         self.confirmLap = tk.CTkButton(master=self.addLapFrame, text="Add Lap: ", font=("Helvetica", 20), command=self.AddManualLap)
-        self.confirmLap.grid(row=2, column=0, columnspan=2, padx=padding, pady=7)
+        self.confirmLap.grid(row=3, column=0, columnspan=2, padx=padding, pady=(7, 10))
 
 
