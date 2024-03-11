@@ -8,11 +8,11 @@ Another note is that while this application will run on both Windows and Mac mac
 
 ## Notes on Google Sheets Integration
 
-If this is being read on the future, and your use case is unrelated to a a certain World Record attempt that is happening in early 2024, then, in order to allow this program to interact with a Google Sheets file, you will have to create a "Google Project" and replace both the "Credentials.json", and the "token.json" files with your own information. You will also have to change the "SPREADSHEET_ID" variable in the "Sheets.py" file with your own spreadsheet. A guide on how to do this is provided below:
+If this is being read in the future, and your use case is unrelated to a certain World Record attempt that is happening in early 2024, then, in order to allow this program to interact with a Google Sheets file, you will have to create a "Google Project" and replace both the "Credentials.json", and the "token.json" files with your own information. You will also have to change the "SPREADSHEET_ID" variable in the "Sheets.py" file with your own spreadsheet. A guide on how to do this is provided below:
 
 https://developers.google.com/sheets/api/quickstart/python
 
-If your use case is related to the above mentioned World Record Attempt, then all that is required is to delete the "Credentials.json" file, if present, then run the program. This will prompt you to log into a Google Acount via web browser. Log in, and rerun the program.
+If your use case is related to the above mentioned World Record Attempt, then all that is required is to delete the "Credentials.json" file, if present, then run the program. This will prompt you to log into a Google Account via web browser. Log in, and rerun the program.
 
 ## Required Python Libraries
 
