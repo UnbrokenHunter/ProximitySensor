@@ -2,18 +2,20 @@ import customtkinter as tk
 import Globals
 import Sensor
 import SensorEmulator
+import MotionSensor
 
 class Frame(tk.CTkFrame):  
     def __init__(self, master, **kwargs):
         super().__init__(master, **kwargs)
         self.CreateUI()
 
-    def Simulated(self):
-        Globals.Simulated = not Globals.Simulated
-        print("Simulated: ", Globals.Simulated)
+    def Mode(self, choice):
+        Globals.Mode = choice
+        print("Mode: ", choice)
 
         SensorEmulator.Run()
         Sensor.Run()
+        MotionSensor.Run()
 
     def Pin(self):
         Globals.Pin = int(self.pinEntry.get())
@@ -22,6 +24,7 @@ class Frame(tk.CTkFrame):
     def Delay(self):
         Globals.SensorDelay = float(self.delayEntry.get())
         print("Delay: ", Globals.SensorDelay)
+
 
     def CreateUI(self):
         self.titleFrame = tk.CTkFrame(master=self)
@@ -33,6 +36,11 @@ class Frame(tk.CTkFrame):
         self.simulated = tk.CTkCheckBox(master=self, text="Simulate Sensor Data", command=self.Simulated, height=50, font=("Helvetica", 20))
         self.simulated.deselect()
         self.simulated.grid(row=1, column=0, columnspan=2, padx=10, pady=5, sticky="w")
+
+        self.mode = tk.CTkComboBox(master=self, 
+                                     values=["Sensor", "Motion Sensor", "Sensor Emulator"],
+                                     command=self.Mode)
+        self.mode.grid(row=1, column=0, columnspan=2, padx=10, pady=5, sticky="w")
 
         self.pinEntry = tk.CTkEntry(master=self, placeholder_text=f"Pin: {Globals.Pin}", height=40, font=("Helvetica", 20))
         self.pinEntry.grid(row=2, column=0, padx=(10, 5), pady=5)

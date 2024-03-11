@@ -8,7 +8,7 @@ def ReadData():
     trackLength = 20
 
     while True:
-        if (Globals.Simulated):
+        if Globals.Mode == "Sensor Emulator":
             trackPosition += random.random() * 1.5
 
             trackPosition = trackPosition % trackLength

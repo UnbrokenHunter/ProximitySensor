@@ -52,6 +52,6 @@ TrackLength = 0.4 # 0.4km
 RecordRequirement = 825055 # Meters
 
 # Debug
-Simulated = False
+Mode = "Sensor"
 Pin = 4
 SensorDelay = 0.1

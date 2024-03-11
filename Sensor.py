@@ -21,7 +21,7 @@ def ReadData():
     while True:
         global localPin
 
-        if not Globals.Simulated:
+        if Globals.Mode == "Sensor":
             try:
                 if localPin != Globals.Pin:
                     SetupPin(Globals.Pin)
