@@ -36,7 +36,7 @@ class Frame(tk.CTkFrame):
         self.mode = tk.CTkComboBox(master=self, 
                                      values=["Sensor", "Motion Sensor", "Sensor Emulator"],
                                      command=self.Mode)
-        self.mode.grid(row=1, column=0, columnspan=2, padx=10, pady=5, sticky="w")
+        self.mode.grid(row=1, column=0, columnspan=2, padx=10, pady=5, sticky="ew")
 
         self.pinEntry = tk.CTkEntry(master=self, placeholder_text=f"Pin: {Globals.Pin}", height=40, font=("Helvetica", 20))
         self.pinEntry.grid(row=2, column=0, padx=(10, 5), pady=5)

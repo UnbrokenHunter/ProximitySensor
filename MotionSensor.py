@@ -7,11 +7,7 @@ try:
 except ModuleNotFoundError as err:
     print("GPIOZero Not Found")
 
-pir = None
-
 def ReadData():
-    global pir
-
     while True:
         global localPin
         pir = MotionSensor(4)
@@ -19,8 +15,7 @@ def ReadData():
         if Globals.Mode == "Motion Sensor":
             # Read the sensor output
             value = pir.motion_detected
-            pir.wait_for_motion()
-
+            print ("Motion: ", value)
             ProccessSensorData.SensorData(value)
         else:
             return        
