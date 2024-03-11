@@ -80,7 +80,7 @@ class Frame(tk.CTkFrame):
         self.lapTime = tk.CTkEntry(master=self.addLapFrame, placeholder_text="Lap Time: ", font=("Helvetica", 20))
         self.lapTime.grid(row=2, column=0, padx=padding, pady=7, sticky="ew")
 
-        self.distanceDriven= tk.CTkEntry(master=self.addLapFrame, placeholder_text="Distance Drive (km): ", font=("Helvetica", 20))
+        self.distanceDriven= tk.CTkEntry(master=self.addLapFrame, placeholder_text="Distance Driven (km): ", font=("Helvetica", 20))
         self.distanceDriven.grid(row=2, column=1, padx=padding, pady=(4, 5), sticky="ew")
 
         self.confirmLap = tk.CTkButton(master=self.addLapFrame, text="Add Lap: ", font=("Helvetica", 20), command=self.AddManualLap)
