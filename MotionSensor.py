@@ -13,11 +13,15 @@ def ReadData():
         pir = MotionSensor(4)
 
         if Globals.Mode == "Motion Sensor":
-            # Read the sensor output
-            value = pir.motion_detected
-            print ("Motion: ", value)
-            ProccessSensorData.SensorData(value)
+            try:
+                # Read the sensor output
+                value = pir.motion_detected
+                print ("Motion: ", value)
+                ProccessSensorData.SensorData(value)
+            finally:
+                pir.close()
         else:
+            pir.close()
             return        
       
 def Run():  

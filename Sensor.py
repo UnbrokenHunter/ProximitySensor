@@ -34,6 +34,7 @@ def ReadData():
             finally:
                 GPIO.cleanup()
         else:
+            GPIO.cleanup()
             return        
       
 def Run():  
