@@ -1,8 +1,11 @@
-from gpiozero import MotionSensor
 import Globals
 import time
 import ProccessSensorData
 import threading
+try:
+    from gpiozero import MotionSensor
+except ModuleNotFoundError as err:
+    print("GPIOZero Not Found")
 
 pir = None
 
@@ -23,6 +26,6 @@ def ReadData():
             return        
       
 def Run():  
-    if not Globals.Simulated:
+    if Globals.Mode == "Motion Sensor":
         t1 = threading.Thread(target=ReadData, daemon=True)
         t1.start()

@@ -7,7 +7,7 @@ import Sensor
 class App(tk.CTk):
     def __init__(self):
         super().__init__()
-        tk.set_appearance_mode("System")  # Modes: system (default), light, dark
+        tk.set_appearance_mode("dark")  # Modes: system (default), light, dark
         tk.set_default_color_theme("blue")  # Themes: blue (default), dark-blue, green
 
         self.title("Lap Tracker")

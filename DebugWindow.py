@@ -33,10 +33,6 @@ class Frame(tk.CTkFrame):
         self.title = tk.CTkLabel(master=self.titleFrame, text="Debug:", justify="left", anchor="w",font=("Helvetica", 40, "italic", "normal"))
         self.title.pack(padx=(10, 40), pady=10, fill="x")
 
-        self.simulated = tk.CTkCheckBox(master=self, text="Simulate Sensor Data", command=self.Simulated, height=50, font=("Helvetica", 20))
-        self.simulated.deselect()
-        self.simulated.grid(row=1, column=0, columnspan=2, padx=10, pady=5, sticky="w")
-
         self.mode = tk.CTkComboBox(master=self, 
                                      values=["Sensor", "Motion Sensor", "Sensor Emulator"],
                                      command=self.Mode)

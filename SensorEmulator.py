@@ -22,7 +22,7 @@ def ReadData():
             return        
 
 def Run():
-    if (Globals.Simulated):
+    if Globals.Mode == "Sensor Emulator":
         t1 = threading.Thread(target=ReadData, daemon=True)
         t1.start()
 
