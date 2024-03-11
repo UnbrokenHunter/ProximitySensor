@@ -40,7 +40,7 @@ Drivers = ["Mac", "Mitchell", "Josh", "Hunter", "John Walter",
            "Vincent H", "Cooper H", "Tristan J", "Nathaniel J", 
            "Reese J", "Eli K", "Garrett L", "Powers M", 
            "Immanuel N", "Alec N", "Krish P", "Carson P", 
-           "Martin R", "Nathan S", "Gabriel S", "Marc W"]
+           "Martin R", "Nathan S", "Gabriel S", "Marc W", "Other"]
 LapCount = 0
 CurrentLapTime = 0
 LastLapTime = 0
