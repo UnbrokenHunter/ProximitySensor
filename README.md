@@ -27,4 +27,10 @@ https://developers.google.com/sheets/api/quickstart/python
     | Current Value is not Equal to Previous Value, and the Previous Value is True  | We can conclude that the car exited the sensor on this detection.  |
 
 3. Lap is Saved
-	* 
+	* When the car is determined to have exited the sensor, a lap is saved. First however, the "Lap Time" is compared to a minimum time variable (10 by default), and if it is below the threshold, the lap is disqualified. 
+    * Once verified however, the lap can actually be saved. First the program will attempt to reach the Google Sheets API, and update the data there. If it is successful, the data will be logged in the first empty row.
+        * The program will iterate through all previous rows to find this
+        * The current lap is also determined by by the row that it finds. It was designed this way to hopefully be more resiliant towards crashes, as even if the program crashes, the local lap count can automaticly update it's self to match the Sheets count (In otherwords, Sheets take priority)
+    * Next, the program will save the data to a local Excel file. This is always done to ensure that, at the very least, if the internet connection goes down, we still have useable data. 
+    * Finally, if the data is not successfully saved to Google Sheets (And therefore an accurate lap count can not be gathered), the program will increment the lap count variable by one. 
+        * This may seem unimportant to note, but by having the lap count be determined by a local variable, a program crash becomes a massive concern, as that variable will not persist across instances. 
