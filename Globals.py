@@ -33,7 +33,14 @@ LapFilters = True
 MinLapTime = 10
 
 CurrentDriver = "None"
-Drivers = ["Mac", "Mitchell", "Josh", "Hunter", "John Walter"]
+Drivers = ["Mac", "Mitchell", "Josh", "Hunter", "John Walter", 
+           "Sam", "Reid", "Jack", "Elijah B", "Liam", "Mr. Lipp", 
+           "Andy", "Luke B", "Truman B", "Andrew C", "Haolin C", "Ben F", "Alex G", 
+           "Ciarán G", "Mason H", "Frtiz H", "Tucker H", 
+           "Vincent H", "Cooper H", "Tristan J", "Nathaniel J", 
+           "Reese J", "Eli K", "Garrett L", "Powers M", 
+           "Immanuel N", "Alec N", "Krish P", "Carson P", 
+           "Martin R", "Nathan S", "Gabriel S", "Marc W"]
 LapCount = 0
 CurrentLapTime = 0
 LastLapTime = 0
