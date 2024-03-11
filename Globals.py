@@ -34,7 +34,7 @@ MinLapTime = 10
 
 CurrentDriver = "None"
 Drivers = ["Mac", "Mitchell", "Josh", "Hunter", "John Walter", 
-           "Sam", "Reid", "Jack", "Elijah B", "Liam", "Mr. Lipp", 
+           "Sam", "Reid", "Jack", "Elijah", "Liam", "Mr. Lipp", 
            "Andy", "Luke B", "Truman B", "Andrew C", "Haolin C", "Ben F", "Alex G", 
            "Ciarán G", "Mason H", "Frtiz H", "Tucker H", 
            "Vincent H", "Cooper H", "Tristan J", "Nathaniel J", 
