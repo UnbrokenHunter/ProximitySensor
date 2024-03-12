@@ -18,7 +18,7 @@ If your use case is related to the above mentioned World Record Attempt, then al
 
     pip install --upgrade RPi.GPIO spidev Adafruit_GPIO customtkinter google-api-python-client google-auth-httplib2 google-auth-oauthlib openpyxl gpiozero
 
-If the Python libraries cannot be succesfully installed, try installing it in a Python virtual enviroment. To do this, enter the following commands (Assuming you are on a Linux distro):
+If the Python libraries cannot be successfully installed, try installing it in a Python virtual environment. To do this, enter the following commands into the terminal (Assuming you are on a Linux distro):
 
     cd path/to/ProximitySensor
     python3 -m venv venv
