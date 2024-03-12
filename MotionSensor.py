@@ -7,24 +7,26 @@ try:
 except ModuleNotFoundError as err:
     print("GPIOZero Not Found")
 
-def ReadData():
+def ReadData(pir):
     while True:
-        global localPin
-        pir = MotionSensor(4)
-
         if Globals.Mode == "Motion Sensor":
             try:
                 # Read the sensor output
                 value = pir.motion_detected
-                print ("Motion: ", value)
+                print("Motion: ", value)
                 ProccessSensorData.SensorData(value)
-            finally:
-                pir.close()
+            except Exception as e:
+                print(f"An error occurred: {e}")
+                # Handle or log the error appropriately
         else:
-            pir.close()
-            return        
+            return  # Exit the loop if the mode is not "Motion Sensor"
       
 def Run():  
     if Globals.Mode == "Motion Sensor":
-        t1 = threading.Thread(target=ReadData, daemon=True)
-        t1.start()
+        try:
+            pir = MotionSensor(4)  # Define pin as needed
+            t1 = threading.Thread(target=ReadData, args=(pir,), daemon=True)
+            t1.start()
+        except Exception as e:
+            print(f"Failed to start motion sensor thread: {e}")
+            # Handle or log the error appropriately
