@@ -32,6 +32,7 @@ If your use case is related to the above mentioned World Record Attempt, then al
 3. Lap is Saved
 
    - When the car is determined to have exited the sensor, a lap is saved. First however, the "Lap Time" is compared to a minimum time variable (10 by default), and if it is below the threshold, the lap is disqualified.
+   - The second filter checks that the sensor is not endlessly displaying a positive value. This is to prevent a misaligned sensor from appearing as if it is working, by displaying new laps being saved. The default threshold is if all of the last 80 values were true, it will begin halting future lap saves, and printing a warning message to the screen.
    - Once verified however, the lap can actually be saved. First the program will attempt to reach the Google Sheets API, and update the data there. If it is successful, the data will be logged in the first empty row.
      - The program will iterate through all previous rows to find this
      - The current lap is also determined by the row that it finds. It was designed this way to hopefully be more resilient towards crashes, as even if the program crashes, the local lap count can automatically update itself to match the Sheets count (In other words, Sheets take priority)
@@ -46,5 +47,6 @@ If your use case is related to the above mentioned World Record Attempt, then al
    - Data Window
      - The Data Window the data stored locally, for the pit crew to view, without having to check a spreadsheet. It stores Lap Count, Current Lap Time, Average Lap Time, a Projected End Time, and finally, displays all previous laps in a scrollable box.
      - The live data in the Data Window is continuously updated using multithreading. Then the file is run for the first time, a new thread is created that will loop forever, updating all of the fields to reflect the new data.
-     - The Debug Window allows you to change certain core variables in the program, such as the GPIO pin that is being checked by the sensor, amount of time between each GPIO pin read, and finally, whether or not the Sensor Data should be emulated (for testing and debugging).
-       - When the Simulated Checkbox is clicked, it will kill the thread that is currently running (emulator or not), and start a new thread of the opposite type.
+   - The Debug Window allows you to change certain core variables in the program, such as the GPIO pin that is being checked by the sensor, amount of time between each GPIO pin read, and finally, a dropdown to select what kind of sensor should be used for input (for testing and debugging).
+     - When a Mode Dropdown is selected, it will kill the thread that is currently running, and start a new thread of the opposite type.
+   - You can also change settings related to Lap Filtering, including the minimum time per lap, and the threshold for considering the sensor to be misaligned or broken.
