@@ -60,3 +60,4 @@ If the Python libraries cannot be successfully installed, try installing it in a
    - The Debug Window allows you to change certain core variables in the program, such as the GPIO pin that is being checked by the sensor, amount of time between each GPIO pin read, and finally, a dropdown to select what kind of sensor should be used for input (for testing and debugging).
      - When a Mode Dropdown is selected, it will kill the thread that is currently running, and start a new thread of the opposite type.
    - You can also change settings related to Lap Filtering, including the minimum time per lap, and the threshold for considering the sensor to be misaligned or broken.
+   - The Enable Logging Checkbox will enable or disable terminal output of the current state of the sensor. If enabled, this will log every high or low value received.
