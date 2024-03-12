@@ -33,6 +33,8 @@ LapFilters = True
 MinLapTime = 10
 TimeSinceLastFalseThreshold = 80
 
+EnableLogging = False
+
 CurrentDriver = "None"
 Drivers = ["Mac", "Mitchell", "Josh", "Hunter", "John Walter", 
            "Sam", "Reid", "Jack", "Elijah", "Liam", "Mr. Lipp", 

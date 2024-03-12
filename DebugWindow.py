@@ -17,6 +17,10 @@ class Frame(tk.CTkFrame):
         Sensor.Run()
         MotionSensor.Run()
 
+    def EnableLogging(self):
+        Globals.EnableLogging = not Globals.EnableLogging
+        print("Enable Logging: ", Globals.EnableLogging)
+
     def Pin(self):
         Globals.Pin = int(self.pinEntry.get())
         print("Pin: ", Globals.Pin)
@@ -71,3 +75,6 @@ class Frame(tk.CTkFrame):
         self.brokenSensorBtn = tk.CTkButton(master=self, text="Select Value", command=self.BrokenSensorDetection, height=40, font=("Helvetica", 20))
         self.brokenSensorBtn.grid(row=5, column=1, padx=(5, 10), pady=5)
 
+        self.enableLoggingCheck = tk.CTkCheckBox(master=self, text="Enable Logging", command=self.EnableLogging, height=40, font=("Helvetica", 20))
+        self.enableLoggingCheck.deselect()
+        self.enableLoggingCheck.grid(row=6, column=0, columnspan=2, padx=(5, 10), pady=5, sticky="ew")

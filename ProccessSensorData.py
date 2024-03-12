@@ -41,6 +41,9 @@ def SaveLap():
     lapStartTime = time.time()
 
 def SensorData(value):
+    if (Globals.EnableLogging == True):
+        print(value)
+
     if (Globals.TrackingEnabled == True):
 
         global previousValue
