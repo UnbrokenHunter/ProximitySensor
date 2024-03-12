@@ -12,7 +12,7 @@ If this is being read in the future, and your use case is unrelated to a certain
 
 https://developers.google.com/sheets/api/quickstart/python
 
-If your use case is related to the above mentioned World Record Attempt, then all that is required is to delete the "Credentials.json" file, if present, then run the program. This will prompt you to log into a Google Account via web browser. Log in, and rerun the program.
+If your use case is related to the above mentioned World Record Attempt, then all that is required is to delete the "token.json" file, if present, then run the program. This will prompt you to log into a Google Account via web browser. Log in, and rerun the program.
 
 ## Required Python Libraries
 
