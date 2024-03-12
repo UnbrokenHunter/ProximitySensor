@@ -25,6 +25,13 @@ class Frame(tk.CTkFrame):
         Globals.SensorDelay = float(self.delayEntry.get())
         print("Delay: ", Globals.SensorDelay)
 
+    def MinLapTime(self):
+        Globals.MinLapTime = float(self.minLapTimeEntry.get())
+        print("Min Lap Time: ", Globals.MinLapTime)
+
+    def BrokenSensorDetection(self):
+        Globals.TimeSinceLastFalseThreshold = int(self.brokenSensorEntry.get())
+        print("Broken Sensor: ", Globals.TimeSinceLastFalseThreshold)
 
     def CreateUI(self):
         self.titleFrame = tk.CTkFrame(master=self)
@@ -47,6 +54,20 @@ class Frame(tk.CTkFrame):
         self.delayEntry = tk.CTkEntry(master=self, placeholder_text=f"Delay: {Globals.SensorDelay}s", height=40, font=("Helvetica", 20))
         self.delayEntry.grid(row=3, column=0, padx=(10, 5), pady=5)
 
-        # Adjusted the placement of the delayButton to row 3, column 1
         self.delayButton = tk.CTkButton(master=self, text="Select Delay", command=self.Delay, height=40, font=("Helvetica", 20))
         self.delayButton.grid(row=3, column=1, padx=(5, 10), pady=5)
+
+
+        self.minLapTimeEntry = tk.CTkEntry(master=self, placeholder_text=f"Min Lap: {Globals.SensorDelay}s", height=40, font=("Helvetica", 20))
+        self.minLapTimeEntry.grid(row=4, column=0, padx=(10, 5), pady=5)
+
+        self.minLapTimeBtn = tk.CTkButton(master=self, text="Select Time", command=self.MinLapTime, height=40, font=("Helvetica", 20))
+        self.minLapTimeBtn.grid(row=4, column=1, padx=(5, 10), pady=5)
+
+
+        self.brokenSensorEntry = tk.CTkEntry(master=self, placeholder_text=f"Broken Sensor: {Globals.SensorDelay}s", height=40, font=("Helvetica", 20))
+        self.brokenSensorEntry.grid(row=5, column=0, padx=(10, 5), pady=5)
+
+        self.brokenSensorBtn = tk.CTkButton(master=self, text="Select Value", command=self.BrokenSensorDetection, height=40, font=("Helvetica", 20))
+        self.brokenSensorBtn.grid(row=5, column=1, padx=(5, 10), pady=5)
+

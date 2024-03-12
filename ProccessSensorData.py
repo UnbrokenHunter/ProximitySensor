@@ -6,16 +6,22 @@ import LocalSheets
 previousValue = False
 lapStartTime = time.time()
 speedTrackerTimer = 0
+timeSinceLastFalse = 0
 
 def SaveLap():
     global lapStartTime
     global speedTrackerTimer
+    global timeSinceLastFalse
 
     # Lap Count Is Calculated Based on Spreadsheet Row 
 
     # If __ then Lap is probably not accurate
     if Globals.CurrentLapTime < Globals.MinLapTime and Globals.LapFilters == True:
         print(f"Lap with time of {Globals.FormatTime(Globals.CurrentLapTime)} likely fraudulent. It has been disqualified.")
+        return
+    
+    if timeSinceLastFalse > Globals.TimeSinceLastFalseThreshold and Globals.LapFilters == True:
+        print(f"There has been {timeSinceLastFalse} true reading in a row. This is likely fraudulent. Nothing will be saved. \nPlease Check Sensor!")
         return
 
     Globals.LastLapTime = Globals.CurrentLapTime
@@ -40,6 +46,12 @@ def SensorData(value):
         global previousValue
         global lapStartTime
         global speedTrackerTimer
+        global timeSinceLastFalse
+
+        if value == True:
+            timeSinceLastFalse += 1
+        else:
+            timeSinceLastFalse = 0
 
         # Calculate Lap Time
         Globals.CurrentLapTime = (time.time() - lapStartTime)

@@ -31,6 +31,7 @@ def FormatTime(time):
 TrackingEnabled = True
 LapFilters = True
 MinLapTime = 10
+TimeSinceLastFalseThreshold = 80
 
 CurrentDriver = "None"
 Drivers = ["Mac", "Mitchell", "Josh", "Hunter", "John Walter", 
