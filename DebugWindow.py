@@ -62,14 +62,14 @@ class Frame(tk.CTkFrame):
         self.delayButton.grid(row=3, column=1, padx=(5, 10), pady=5)
 
 
-        self.minLapTimeEntry = tk.CTkEntry(master=self, placeholder_text=f"Min Lap: {Globals.SensorDelay}s", height=40, font=("Helvetica", 20))
+        self.minLapTimeEntry = tk.CTkEntry(master=self, placeholder_text=f"Min Lap: {Globals.MinLapTime}s", height=40, font=("Helvetica", 20))
         self.minLapTimeEntry.grid(row=4, column=0, padx=(10, 5), pady=5)
 
         self.minLapTimeBtn = tk.CTkButton(master=self, text="Select Time", command=self.MinLapTime, height=40, font=("Helvetica", 20))
         self.minLapTimeBtn.grid(row=4, column=1, padx=(5, 10), pady=5)
 
 
-        self.brokenSensorEntry = tk.CTkEntry(master=self, placeholder_text=f"Broken Sensor: {Globals.SensorDelay}s", height=40, font=("Helvetica", 20))
+        self.brokenSensorEntry = tk.CTkEntry(master=self, placeholder_text=f"Broken Sensor: {Globals.TimeSinceLastFalseThreshold}s", height=40, font=("Helvetica", 20))
         self.brokenSensorEntry.grid(row=5, column=0, padx=(10, 5), pady=5)
 
         self.brokenSensorBtn = tk.CTkButton(master=self, text="Select Value", command=self.BrokenSensorDetection, height=40, font=("Helvetica", 20))
