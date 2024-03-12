@@ -2,7 +2,7 @@ import customtkinter as tk
 import TitleWindow
 import DataWindow
 import DebugWindow
-import MotionSensor
+import Sensor
 
 class App(tk.CTk):
     def __init__(self):
@@ -25,7 +25,7 @@ class App(tk.CTk):
         self.debug = DebugWindow.Frame(master=self)  # Place your debug frame in this new window
         self.debug.grid(row=0, column=2, padx=(10, 20), pady=20, sticky="nswe")
 
-        MotionSensor.Run()
+        Sensor.Run()
 
 if __name__ == "__main__":
     app = App()
