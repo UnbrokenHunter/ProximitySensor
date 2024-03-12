@@ -16,7 +16,7 @@ If your use case is related to the above mentioned World Record Attempt, then al
 
 ## Required Python Libraries
 
-    pip install --upgrade RPi.GPIO spidev Adafruit_GPIO customtkinter google-api-python-client google-auth-httplib2 google-auth-oauthlib openpyxl
+    pip install --upgrade RPi.GPIO spidev Adafruit_GPIO customtkinter google-api-python-client google-auth-httplib2 google-auth-oauthlib openpyxl gpiozero
 
 ## Program Flow
 
