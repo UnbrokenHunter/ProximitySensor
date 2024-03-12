@@ -2,6 +2,8 @@
 
 This Python application was developed to solve the issue of maintaining an accurate lap count when racing an RC car around a track.
 
+![LapTrackerImg](https://github.com/UnbrokenHunter/ProximitySensor/assets/82844928/75c80c76-1b63-4e34-86bd-3907bf7de9ee)
+
 > Please note that this application is designed to function with a hardware sensor's input. This should be plugged in via GPIO pins. The program will still run without this (with some errors), but lap tracking will be entirely non-functional.
 
 Another note is that while this application will run on both Windows and Mac machines, it will not function correctly, as the GPIO library that is used in this program is designed specifically to run on Linux powered Raspberry Pi's.
