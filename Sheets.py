@@ -62,7 +62,7 @@ def update_cell(range_name, new_value):
 def get_values(range_name):
     """Retrieves the values of a specific cell or cell range from a spreadsheet."""
     try:
-        service = get_service(5)  # Make sure you have this function defined as in your initial code
+        service = get_service(5) 
         result = service.spreadsheets().values().get(
             spreadsheetId=SPREADSHEET_ID, range=range_name).execute()
         values = result.get('values', [])
@@ -82,8 +82,8 @@ def get_values(range_name):
 def find_first_empty_cell_in_column(sheet_name):
     """Finds the first empty cell in the second column of a specified sheet."""
     try:
-        service = get_service(5)  # Ensure you have the get_service function as provided earlier
-        column_letter = 'A'  # Assuming you are looking for the first empty cell in the second column
+        service = get_service(5)
+        column_letter = 'A'
         range_name = f'{sheet_name}!{column_letter}:{column_letter}'
         
         result = service.spreadsheets().values().get(

@@ -10,7 +10,7 @@ SPREADSHEET_FILE_PATH = "sheets_backup.xlsx"
 
 def get_or_create_workbook(file_path):
     """Check if the spreadsheet file exists. If not, create it and add headers."""
-    headers = ["Lap Count", "Lap Time", "Driver Name", "Distance Driven", "Instant Speed", "Average Speed", "Time"]  # Define your headers here
+    headers = ["Lap Count", "Lap Time", "Driver Name", "Distance Driven", "Instant Speed", "Average Speed", "Time"]
     if not os.path.exists(file_path):
         wb = Workbook()
         ws = wb.active
@@ -22,7 +22,6 @@ def get_or_create_workbook(file_path):
         sheet = wb["Sheet1"]
         if sheet.max_row == 1:
             # Check if the first row is empty or only contains headers; if so, append the headers.
-            # Note: This is a basic check and might need adjustments based on your actual requirements.
             empty_or_headers_only = all(sheet[f"A1":f"G1"][0][i].value in (None, headers[i]) for i in range(len(headers)))
             if empty_or_headers_only:
                 for col_num, header in enumerate(headers, start=1):
