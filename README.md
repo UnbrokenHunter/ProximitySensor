@@ -59,7 +59,8 @@ If the Python libraries cannot be successfully installed, try installing it in a
    - Data Window
      - The Data Window the data stored locally, for the pit crew to view, without having to check a spreadsheet. It stores Lap Count, Current Lap Time, Average Lap Time, a Projected End Time, and finally, displays all previous laps in a scrollable box.
      - The live data in the Data Window is continuously updated using multithreading. Then the file is run for the first time, a new thread is created that will loop forever, updating all of the fields to reflect the new data.
-   - The Debug Window allows you to change certain core variables in the program, such as the GPIO pin that is being checked by the sensor, amount of time between each GPIO pin read, and finally, a dropdown to select what kind of sensor should be used for input (for testing and debugging).
+   - The Debug Window
+     - The Debug Window allows you to change certain core variables in the program, such as the GPIO pin that is being checked by the sensor, amount of time between each GPIO pin read, and finally, a dropdown to select what kind of sensor should be used for input (for testing and debugging).
      - When a Mode Dropdown is selected, it will kill the thread that is currently running, and start a new thread of the opposite type.
-   - You can also change settings related to Lap Filtering, including the minimum time per lap, and the threshold for considering the sensor to be misaligned or broken.
-   - The Enable Logging Checkbox will enable or disable terminal output of the current state of the sensor. If enabled, this will log every high or low value received.
+     - You can also change settings related to Lap Filtering, including the minimum time per lap, and the threshold for considering the sensor to be misaligned or broken.
+     - The Enable Logging Checkbox will enable or disable terminal output of the current state of the sensor. If enabled, this will log every high or low value received.
