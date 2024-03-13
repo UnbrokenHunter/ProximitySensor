@@ -14,7 +14,9 @@ If this is being read in the future, and your use case is unrelated to a certain
 
 https://developers.google.com/sheets/api/quickstart/python
 
-If your use case is related to the above mentioned World Record Attempt, then all that is required is to delete the "token.json" file, if present, then run the program. This will prompt you to log into a Google Account via web browser. Log in, and rerun the program.
+If your use case is related to the above mentioned World Record Attempt, then all that is required is to delete the "token.json" file, if present, then run the program. This will prompt you to log into a Google Account via web browser. Log in, and re-run the program.
+
+- To explain this, the "token.json" file functions like a web cookie. It gives the Sheets API permission to access the spreadsheet. The reason why you must delete the it is because after not being used, the token will expire and you must refresh it.
 
 ## Required Python Libraries
 
