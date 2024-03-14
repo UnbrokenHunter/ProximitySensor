@@ -28,7 +28,7 @@ def FormatTime(time):
     else:
         return "%02d:%02d.%03d" % (minutes, seconds, milliseconds)
     
-TrackingEnabled = True
+TrackingEnabled = False
 LapFilters = True
 MinLapTime = 10
 TimeSinceLastFalseThreshold = 80

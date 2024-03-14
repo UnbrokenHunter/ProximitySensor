@@ -50,7 +50,7 @@ class Frame(tk.CTkFrame):
         self.driver.grid(row=2, column=0, padx=10, pady=(3, 10), sticky="ew")
 
         self.enableTracking = tk.CTkCheckBox(master=self, text="Enable Tracking", command=self.EnableTracking, height=50, font=("Helvetica", 20))
-        self.enableTracking.select()
+        self.enableTracking.deselect()
         self.enableTracking.grid(row=3, column=0, padx=10, pady=3, sticky="ew")
 
         self.lapFilters = tk.CTkCheckBox(master=self, text="Lap Filters", command=self.LapFilters, height=50, font=("Helvetica", 20))
