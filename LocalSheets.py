@@ -36,7 +36,9 @@ def update_cell(sheet_name, row_number, column_letter, new_value):
     cell_reference = f"{column_letter}{row_number + 1}"
     sheet[cell_reference] = new_value
     wb.save(SPREADSHEET_FILE_PATH)
-    print(f"Updated local cell {cell_reference}.")
+    
+    if Globals.EnableLogging:
+        print(f"Updated local cell {cell_reference}.")
 
 def find_first_empty_cell_in_column(sheet_name, column_letter='A'):
     """Finds the first empty cell in a specified column of a local Excel sheet."""
@@ -55,8 +57,9 @@ def find_first_empty_cell_in_column(sheet_name, column_letter='A'):
     if Globals.ControlsLapCount == "Local":
         Globals.LapCount = row_number - 1
     
-    # Log or handle the first empty cell's position as needed. For debugging, you might want to print it.
-    print(f"First empty cell in column {column_letter} is at row {row_number}")
+    if Globals.EnableLogging:
+        # Log or handle the first empty cell's position as needed. For debugging, you might want to print it.
+        print(f"First empty cell in column {column_letter} is at row {row_number}")
     
     return row_number
 

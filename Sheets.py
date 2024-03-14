@@ -55,7 +55,8 @@ def update_cell(range_name, new_value):
         result = service.spreadsheets().values().update(
             spreadsheetId=SPREADSHEET_ID, range=range_name,
             valueInputOption="RAW", body=body).execute()
-        print(f"Updated {result.get('updatedCells')} cell(s).")
+        if Globals.EnableLogging:
+            print(f"Updated {result.get('updatedCells')} cell(s).")
     except HttpError as err:
         print(err)
 
@@ -97,10 +98,11 @@ def find_first_empty_cell_in_column(sheet_name):
                 break
             row_number += 1
         
-        if row_number <= len(values):
-            print(f"First empty cell in column {column_letter} is at row {row_number}")
-        else:
-            print(f"All cells in column {column_letter} up to row {row_number} are filled. The first empty cell is at row {row_number + 1}")
+        if Globals.EnableLogging:
+            if row_number <= len(values) :
+                print(f"First empty cell in column {column_letter} is at row {row_number}")
+            else:
+                print(f"All cells in column {column_letter} up to row {row_number} are filled. The first empty cell is at row {row_number + 1}")
             
         if Globals.ControlsLapCount == "Google":
             Globals.LapCount = int(row_number) - 1
