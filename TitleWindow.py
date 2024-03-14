@@ -30,8 +30,8 @@ class Frame(tk.CTkFrame):
         print("Manual Driver Set:", choice)
 
     def AddManualLap(self):
-        Sheets.SaveDataManual(self.lapCount.get(), self.lapTime.get(), self.manualDriverInput, self.distanceDriven.get(), "", "")
-        LocalSheets.SaveDataManual(self.lapCount.get(), self.lapTime.get(), self.manualDriverInput, self.distanceDriven.get(), "", "")
+        Sheets.SaveDataManual(self.lapTime.get(), self.manualDriverInput, self.distanceDriven.get(), "", "")
+        LocalSheets.SaveDataManual(self.lapTime.get(), self.manualDriverInput, self.distanceDriven.get(), "", "")
         print("Manual Lap Added")
 
     def __init__(self, master, **kwargs):

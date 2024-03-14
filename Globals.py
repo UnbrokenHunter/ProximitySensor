@@ -59,3 +59,4 @@ RecordRequirement = 825055 # Meters
 Mode = "Sensor"
 Pin = 4
 SensorDelay = 0.1
+ControlsLapCount = "Local"

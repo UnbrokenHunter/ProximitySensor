@@ -37,6 +37,10 @@ class Frame(tk.CTkFrame):
         Globals.TimeSinceLastFalseThreshold = int(self.brokenSensorEntry.get())
         print("Broken Sensor: ", Globals.TimeSinceLastFalseThreshold)
 
+    def ControlsLapCount(self, choice):
+        Globals.ControlsLapCount = choice
+        print("Controls Lap Count: ", Globals.ControlsLapCount)
+
     def CreateUI(self):
         self.titleFrame = tk.CTkFrame(master=self)
         self.titleFrame.grid(row=0, column=0, columnspan=2, padx=(10, 10), pady=7, sticky="ew")
@@ -78,3 +82,8 @@ class Frame(tk.CTkFrame):
         self.enableLoggingCheck = tk.CTkCheckBox(master=self, text="Enable Logging", command=self.EnableLogging, height=40, font=("Helvetica", 20))
         self.enableLoggingCheck.deselect()
         self.enableLoggingCheck.grid(row=6, column=0, columnspan=2, padx=(5, 10), pady=5, sticky="ew")
+
+        self.controlsLaps = tk.CTkComboBox(master=self, 
+                                     values=["Local", "Google"],
+                                     command=self.ControlsLapCount)
+        self.controlsLaps.grid(row=7, column=0, columnspan=2, padx=10, pady=5, sticky="ew")

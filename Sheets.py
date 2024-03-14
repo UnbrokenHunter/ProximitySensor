@@ -101,19 +101,19 @@ def find_first_empty_cell_in_column(sheet_name):
             print(f"First empty cell in column {column_letter} is at row {row_number}")
         else:
             print(f"All cells in column {column_letter} up to row {row_number} are filled. The first empty cell is at row {row_number + 1}")
-        
-        Globals.LapCount = int(row_number) - 1
+            
+        if Globals.ControlsLapCount == "Google":
+            Globals.LapCount = int(row_number) - 1
         return f"{row_number}"
     except HttpError as err:
         print(err)
         return None
 
-def SaveDataManual(LapCount, LapTime, Driver, DistanceDriven, InstantSpeed, Time):
+def SaveDataManual(LapTime, Driver, DistanceDriven, InstantSpeed, Time):
     try:
         minRow = find_first_empty_cell_in_column("Sheet1")
 
-        # Lap Count
-        update_cell(f"Sheet1!A{minRow}", LapCount)
+        update_cell(f"Sheet1!A{minRow}", Globals.LapCount)
 
         # Lap Time
         update_cell(f"Sheet1!B{minRow}", LapTime)
@@ -138,4 +138,4 @@ def SaveDataManual(LapCount, LapTime, Driver, DistanceDriven, InstantSpeed, Time
 
 
 def SaveData(LapTime, InstantSpeed):
-    SaveDataManual(Globals.LapCount, LapTime, Globals.CurrentDriver, Statistics.GetDistanceDriven(), InstantSpeed, time.strftime("%Y-%m-%d %H:%M:%S"))
+    SaveDataManual(LapTime, Globals.CurrentDriver, Statistics.GetDistanceDriven(), InstantSpeed, time.strftime("%Y-%m-%d %H:%M:%S"))

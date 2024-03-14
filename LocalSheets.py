@@ -38,13 +38,35 @@ def update_cell(sheet_name, row_number, column_letter, new_value):
     wb.save(SPREADSHEET_FILE_PATH)
     print(f"Updated local cell {cell_reference}.")
 
-def SaveDataManual(LapCount, LapTime, Driver, DistanceDriven, InstantSpeed, Time):
+def find_first_empty_cell_in_column(sheet_name, column_letter='A'):
+    """Finds the first empty cell in a specified column of a local Excel sheet."""
+    wb = get_or_create_workbook(SPREADSHEET_FILE_PATH)
+    sheet = wb[sheet_name]
+    column = column_letter.upper()  # Ensure the column letter is uppercase for consistency
+    
+    row_number = 1
+    for row in sheet[column]:
+        if row.value is not None:
+            row_number += 1
+        else:
+            break
+    
+    # Adjust Globals.LapCount if necessary. Ensure Globals.LapCount is properly initialized and managed in your script.
+    if Globals.ControlsLapCount == "Local":
+        Globals.LapCount = row_number - 1
+    
+    # Log or handle the first empty cell's position as needed. For debugging, you might want to print it.
+    print(f"First empty cell in column {column_letter} is at row {row_number}")
+    
+    return row_number
+
+def SaveDataManual(LapTime, Driver, DistanceDriven, InstantSpeed, Time):
     try:
         sheet_name = "Sheet1"
-        minRow = Globals.LapCount
+        minRow = find_first_empty_cell_in_column(sheet_name)
 
         # Lap Count
-        update_cell(sheet_name, minRow, 'A', LapCount)
+        update_cell(sheet_name, minRow, 'A', Globals.LapCount)
 
         # Lap Time
         update_cell(sheet_name, minRow, 'B', LapTime)
@@ -71,5 +93,5 @@ def SaveDataManual(LapCount, LapTime, Driver, DistanceDriven, InstantSpeed, Time
         print(err)
 
 def SaveData(LapTime, InstantSpeed):
-    SaveDataManual(Globals.LapCount, LapTime, Globals.CurrentDriver, Statistics.GetDistanceDriven(), InstantSpeed, time.strftime("%Y-%m-%d %H:%M:%S"))
+    SaveDataManual(LapTime, Globals.CurrentDriver, Statistics.GetDistanceDriven(), InstantSpeed, time.strftime("%Y-%m-%d %H:%M:%S"))
 

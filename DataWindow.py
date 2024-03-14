@@ -14,7 +14,7 @@ class Scrollable(tk.CTkScrollableFrame):
             padding = 10
 
             self.titleFrame = tk.CTkFrame(master=self)
-            self.titleFrame.grid(padx=10, pady=5)
+            self.titleFrame.grid(padx=10, pady=5, sticky="ew")
 
             # Lap Count
             self.titleFrame.lapCountLabel = tk.CTkLabel(master=self.titleFrame, text="Lap Count:", justify="left", anchor="w", font=("Helvetica", size))
@@ -98,7 +98,7 @@ class Frame(tk.CTkFrame):
         def Update():
             while True:
                 if self.LapCount != Globals.LapCount:
-                    self.LapCount += 1
+                    self.LapCount = Globals.LapCount
                     self.scrollable.addItem(Globals.LapCount, 
                                             Statistics.GetCurrentDriver(), 
                                             str(round(Statistics.GetDistanceDriven(), 2)), 
