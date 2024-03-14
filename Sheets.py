@@ -111,9 +111,9 @@ def find_first_empty_cell_in_column(sheet_name):
         print(err)
         return None
 
-def SaveDataManual(LapTime, Driver, DistanceDriven, InstantSpeed, Time):
+def SaveDataManual(Min, LapTime, Driver, DistanceDriven, InstantSpeed, Time):
     try:
-        minRow = find_first_empty_cell_in_column("Sheet1")
+        minRow = Min
 
         update_cell(f"Sheet1!A{minRow}", Globals.LapCount)
 
@@ -139,5 +139,5 @@ def SaveDataManual(LapTime, Driver, DistanceDriven, InstantSpeed, Time):
         print(err)
 
 
-def SaveData(LapTime, InstantSpeed):
-    SaveDataManual(LapTime, Globals.CurrentDriver, Statistics.GetDistanceDriven(), InstantSpeed, time.strftime("%Y-%m-%d %H:%M:%S"))
+def SaveData(Min, LapTime, InstantSpeed):
+    SaveDataManual(Min, LapTime, Globals.CurrentDriver, Statistics.GetDistanceDriven(), InstantSpeed, time.strftime("%Y-%m-%d %H:%M:%S"))

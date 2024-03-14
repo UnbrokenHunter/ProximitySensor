@@ -29,14 +29,16 @@ def SaveLap():
     # Calculate Instant Speed
     InstantSpeed = (time.time() - speedTrackerTimer)
 
+    localMin = LocalSheets.find_first_empty_cell_in_column("Sheet1")
     try:
-        Sheets.SaveData(Globals.LastLapTime, InstantSpeed)
+        sheetsMin = Sheets.find_first_empty_cell_in_column("Sheet1")
+        Sheets.SaveData(sheetsMin, Globals.LastLapTime, InstantSpeed)
     except Exception as err:
         Globals.LapCount += 1 # Update Lap Count Because Digital save is unreachable
         print("Error Saving Sheet Data")
 
     # Always Update Local Save
-    LocalSheets.SaveData(Globals.LastLapTime, InstantSpeed)
+    LocalSheets.SaveData(localMin, Globals.LastLapTime, InstantSpeed)
 
     lapStartTime = time.time()
 

@@ -46,7 +46,7 @@ def find_first_empty_cell_in_column(sheet_name, column_letter='A'):
     sheet = wb[sheet_name]
     column = column_letter.upper()  # Ensure the column letter is uppercase for consistency
     
-    row_number = 1
+    row_number = 0
     for row in sheet[column]:
         if row.value is not None:
             row_number += 1
@@ -55,7 +55,7 @@ def find_first_empty_cell_in_column(sheet_name, column_letter='A'):
     
     # Adjust Globals.LapCount if necessary. Ensure Globals.LapCount is properly initialized and managed in your script.
     if Globals.ControlsLapCount == "Local":
-        Globals.LapCount = row_number - 1
+        Globals.LapCount = row_number
     
     if Globals.EnableLogging:
         # Log or handle the first empty cell's position as needed. For debugging, you might want to print it.
@@ -63,10 +63,10 @@ def find_first_empty_cell_in_column(sheet_name, column_letter='A'):
     
     return row_number
 
-def SaveDataManual(LapTime, Driver, DistanceDriven, InstantSpeed, Time):
+def SaveDataManual(Min, LapTime, Driver, DistanceDriven, InstantSpeed, Time):
     try:
         sheet_name = "Sheet1"
-        minRow = find_first_empty_cell_in_column(sheet_name)
+        minRow = Min
 
         # Lap Count
         update_cell(sheet_name, minRow, 'A', Globals.LapCount)
@@ -95,6 +95,6 @@ def SaveDataManual(LapTime, Driver, DistanceDriven, InstantSpeed, Time):
     except Exception as err:
         print(err)
 
-def SaveData(LapTime, InstantSpeed):
-    SaveDataManual(LapTime, Globals.CurrentDriver, Statistics.GetDistanceDriven(), InstantSpeed, time.strftime("%Y-%m-%d %H:%M:%S"))
+def SaveData(Min, LapTime, InstantSpeed):
+    SaveDataManual(Min, LapTime, Globals.CurrentDriver, Statistics.GetDistanceDriven(), InstantSpeed, time.strftime("%Y-%m-%d %H:%M:%S"))
 
