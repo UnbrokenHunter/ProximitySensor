@@ -2,6 +2,7 @@ import customtkinter as tk
 import Globals
 import Sheets
 import LocalSheets
+import time
 
 class Frame(tk.CTkFrame):     
     
@@ -12,6 +13,11 @@ class Frame(tk.CTkFrame):
         print("Lap Filters: ", Globals.LapFilters)
 
     def EnableTracking(self):
+        if (Globals.RealStart == False):
+            Globals.RealStart = True
+            Globals.StartTime = time.time()
+            self.startTime.configure(text=time.strftime("%Y-%m-%d %H:%M:%S"))
+        
         Globals.TrackingEnabled = not Globals.TrackingEnabled
         print("Enable Tracking: ", Globals.TrackingEnabled)
 
@@ -39,6 +45,9 @@ class Frame(tk.CTkFrame):
 
         self.title = tk.CTkLabel(master=self.titleFrame, text="Lap Tracker", justify="left", font=("Helvetica", 50, "italic", "normal"))
         self.title.pack(side="left", padx=(10), pady=7)
+
+        self.startTime = tk.CTkLabel(master=self.titleFrame, text="", justify="right", font=("Helvetica", 20, "italic", "normal"))
+        self.startTime.pack(anchor="se", padx=(10), pady=7)
 
         self.driverLabel = tk.CTkLabel(master=self, text="Current Driver: ", font=("Helvetica", 20))
         self.driverLabel.grid(row=1, column=0, padx=10, pady=(10, 3), sticky="ew")

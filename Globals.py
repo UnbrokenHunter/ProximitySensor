@@ -50,6 +50,7 @@ LastLapTime = 0
 
 # Statics
 StartTime = time.time()
+RealStart = False # Has Enable Tracking Been Enabled Before
 CarLength = 0.2 # Meters
 TrackLength = 0.4 # 0.4km
 RecordRequirement = 825055 # Meters
