@@ -109,7 +109,7 @@ class Frame(tk.CTkFrame):
                 self.averageLapTime.configure(text=Globals.FormatTime(Statistics.GetAverageLapTime()))
                 self.projectedEndTime.configure(text=Globals.FormatTime(Statistics.GetProjectedEndTime()))
 
-                time.sleep(0.5)  # Delay for half a second
+                time.sleep(Globals.UIDelay)  # Delay for half a second
 
         # self.update = tk.CTkButton(master=self, text="Update", command=Update, height=50, font=("Helvetica", 20))
         # self.update.grid(row=5, column=0, padx=(10, 10), pady=30, sticky="ew")

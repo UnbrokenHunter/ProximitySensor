@@ -58,5 +58,6 @@ RecordRequirement = 825055 # Meters
 # Debug
 Mode = "Sensor"
 Pin = 4
+UIDelay = 0.5
 SensorDelay = 0.1
 ControlsLapCount = "Local"
