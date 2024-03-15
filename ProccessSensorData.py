@@ -2,6 +2,7 @@ import time
 import Globals
 import Sheets
 import LocalSheets
+import threading
 
 previousValue = False
 lapStartTime = time.time()
@@ -26,6 +27,12 @@ def SaveLap():
 
     Globals.LastLapTime = Globals.CurrentLapTime
 
+    t1 = threading.Thread(target=SaveToSheets, daemon=True)
+    t1.start()
+
+    lapStartTime = time.time()
+
+def SaveToSheets():
     # Calculate Instant Speed
     InstantSpeed = (time.time() - speedTrackerTimer)
 
@@ -40,7 +47,6 @@ def SaveLap():
     # Always Update Local Save
     LocalSheets.SaveData(localMin, Globals.LastLapTime, InstantSpeed)
 
-    lapStartTime = time.time()
 
 def SensorData(value):
     if (Globals.EnableLogging == True):
