@@ -15,8 +15,8 @@ class App(tk.CTk):
 
         self.grid_rowconfigure(0, weight=1)  # configure grid system
         self.grid_columnconfigure(0, weight=1)
-        self.grid_columnconfigure(1, weight=1)
-        self.grid_columnconfigure(2, weight=0)
+        self.grid_columnconfigure(1, weight=3)
+        self.grid_columnconfigure(2, weight=1)
 
         self.frame = TitleWindow.Frame(master=self)
         self.frame.grid(row=0, column=0, padx=(20, 10), pady=20, sticky="nswe")
@@ -33,4 +33,4 @@ if __name__ == "__main__":
     app = App()
     app.mainloop()
 
-    
+     

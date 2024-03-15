@@ -13,11 +13,15 @@ class Frame(tk.CTkFrame):
         print("Lap Filters: ", Globals.LapFilters)
 
     def EnableTracking(self):
-        if (Globals.RealStart == False):
+        if (Globals.ManualTimeSet == True):
+            self.startTime.configure(text=Globals.ConvertToFormattedDate(Globals.StartTime))
+            self.startTimeUnix.configure(text=Globals.StartTime)
+        elif (Globals.RealStart == False):
             Globals.RealStart = True
             Globals.StartTime = time.time()
             self.startTime.configure(text=time.strftime("%Y-%m-%d %H:%M:%S"))
-        
+            self.startTimeUnix.configure(text=Globals.StartTime)
+            
         Globals.TrackingEnabled = not Globals.TrackingEnabled
         print("Enable Tracking: ", Globals.TrackingEnabled)
 
@@ -50,7 +54,10 @@ class Frame(tk.CTkFrame):
         self.title.pack(side="left", padx=(10), pady=7)
 
         self.startTime = tk.CTkLabel(master=self.titleFrame, text="", justify="right", font=("Helvetica", 20, "italic", "normal"))
-        self.startTime.pack(anchor="se", padx=(10), pady=7)
+        self.startTime.pack(anchor="ne", padx=(10), pady=7)
+
+        self.startTimeUnix = tk.CTkLabel(master=self.titleFrame, text="", justify="right", font=("Helvetica", 20, "italic", "normal"))
+        self.startTimeUnix.pack(anchor="se", padx=(10), pady=7)
 
         self.driverLabel = tk.CTkLabel(master=self, text="Current Driver: ", font=("Helvetica", 20))
         self.driverLabel.grid(row=1, column=0, padx=10, pady=(10, 3), sticky="ew")

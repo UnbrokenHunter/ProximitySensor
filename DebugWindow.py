@@ -4,7 +4,7 @@ import Sensor
 import SensorEmulator
 import MotionSensor
 
-class Frame(tk.CTkFrame):  
+class Frame(tk.CTkScrollableFrame):  
     def __init__(self, master, **kwargs):
         super().__init__(master, **kwargs)
         self.CreateUI()
@@ -44,6 +44,11 @@ class Frame(tk.CTkFrame):
     def ControlsLapCount(self, choice):
         Globals.ControlsLapCount = choice
         print("Controls Lap Count: ", Globals.ControlsLapCount)
+
+    def ManualSetStartTime(self):
+        Globals.StartTime = float(self.manualStartTime.get())
+        Globals.ManualTimeSet = True
+        print("Start Time: ", Globals.StartTime)
 
     def CreateUI(self):
         self.titleFrame = tk.CTkFrame(master=self)
@@ -96,3 +101,9 @@ class Frame(tk.CTkFrame):
                                      values=["Local", "Google"],
                                      command=self.ControlsLapCount)
         self.controlsLaps.grid(row=8, column=0, columnspan=2, padx=10, pady=5, sticky="ew")
+
+        self.manualStartTime = tk.CTkEntry(master=self, placeholder_text=f"Start Time: {Globals.StartTime}s", height=40, font=("Helvetica", 20))
+        self.manualStartTime.grid(row=9, column=0, padx=(10, 5), pady=5)
+
+        self.manualStartTimeBtn = tk.CTkButton(master=self, text="Set Time", command=self.ManualSetStartTime, height=40, font=("Helvetica", 20))
+        self.manualStartTimeBtn.grid(row=9, column=1, padx=(5, 10), pady=5)

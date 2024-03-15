@@ -1,3 +1,3 @@
 Keep track of when Google Sheets is not saving to update the local spreadsheet with that
 Keep track of unsaved Google Sheets Laps, and repopulate previous laps when there is a connection
-Change Lapcount to be based on local Sheets
+

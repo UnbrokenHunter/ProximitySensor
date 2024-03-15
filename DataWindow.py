@@ -14,7 +14,7 @@ class Scrollable(tk.CTkScrollableFrame):
             padding = 10
 
             self.titleFrame = tk.CTkFrame(master=self)
-            self.titleFrame.grid(padx=10, pady=5, sticky="ew")
+            self.titleFrame.pack(padx=10, pady=5, fill="x")
 
             # Lap Count
             self.titleFrame.lapCountLabel = tk.CTkLabel(master=self.titleFrame, text="Lap Count:", justify="left", anchor="w", font=("Helvetica", size))
@@ -92,7 +92,7 @@ class Frame(tk.CTkFrame):
         self.projectedEndTime = tk.CTkLabel(master=self.frame, text="00:00:00", justify="right", anchor="e", font=("Helvetica", 20))
         self.projectedEndTime.grid(row=2, column=1, padx=padding, pady=7)
 
-        self.scrollable = Scrollable(master=self, width=300)
+        self.scrollable = Scrollable(master=self)
         self.scrollable.pack(fill="both", expand=True, padx=padding, pady=10)
 
         def Update():
