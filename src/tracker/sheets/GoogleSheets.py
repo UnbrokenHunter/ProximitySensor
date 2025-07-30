@@ -111,11 +111,11 @@ def find_first_empty_cell_in_column(sheet_name):
         print(err)
         return None
 
-def SaveDataManual(Min, LapTime, Driver, Time):
+def SaveDataManual(Min, LapCount, LapTime, Driver, Time):
     try:
         minRow = Min
 
-        update_cell(f"Sheet1!A{minRow}", Globals.LapCount)
+        update_cell(f"Sheet1!A{minRow}", LapCount)
 
         # Lap Time
         update_cell(f"Sheet1!B{minRow}", LapTime)
@@ -131,4 +131,18 @@ def SaveDataManual(Min, LapTime, Driver, Time):
 
 
 def SaveData(Min, LapTime):
-    SaveDataManual(Min, LapTime, Globals.CurrentDriver, time.strftime("%Y-%m-%d %H:%M:%S"))
+    SaveDataManual(Min, Globals.LapCount, LapTime, Globals.CurrentDriver, time.strftime("%Y-%m-%d %H:%M:%S"))
+
+def clear_sheet(sheet_name):
+    try:
+        service = get_service(5)  # Use your threaded auth with timeout
+        range_to_clear = f"{sheet_name}!A2:D"  # Adjust range to match used columns
+        body = {}
+        service.spreadsheets().values().clear(
+            spreadsheetId=SPREADSHEET_ID,
+            range=range_to_clear,
+            body=body
+        ).execute()
+        print("Sheet cleared from row 2 down.")
+    except HttpError as err:
+        print("Error clearing sheet:", err)

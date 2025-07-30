@@ -1,7 +1,9 @@
+import os
 import customtkinter as tk
 
 from .. import Globals
 from ..sensors import SensorEmulator, Camera
+from ..sheets import GoogleSheets
 
 
 class Frame(tk.CTkScrollableFrame):
@@ -27,6 +29,21 @@ class Frame(tk.CTkScrollableFrame):
         self.build_general()
         self.build_filters()
         self.build_camera()
+        
+        # Set your file names here
+        self.file1 = "offline_laps.json"
+        self.file2 = "sheets_backup.xlsx"
+
+        reset_btn = tk.CTkButton(
+            master=self,
+            text="Reset System",
+            command=self.reset_everything,
+            font=("Helvetica", 20),
+            fg_color="red",
+            hover_color="#880000"
+        )
+        reset_btn.grid(row=999, column=0, columnspan=2, padx=10, pady=10, sticky="ew")
+
 
     def build_general(self):
         self.general = tk.CTkFrame(master=self, fg_color="#2A2A2A")
@@ -75,6 +92,20 @@ class Frame(tk.CTkScrollableFrame):
         )
         self.enableLoggingCheck.grid(row=3, column=0, columnspan=2, padx=10, pady=5, sticky="ew")
         self.enableLoggingCheck.select() if Globals.EnableLogging else self.enableLoggingCheck.deselect()
+
+        self.emulateGoogleSheetsFailure = tk.CTkCheckBox(
+            master=self.general,
+            text="Sheets Failure",
+            command=lambda: (
+                setattr(Globals, "EmulateGoogleSheetsFailure", self.emulateGoogleSheetsFailure.get() == 1),
+                print("Enable Sheets Failure:", Globals.EmulateGoogleSheetsFailure)
+            ),
+            height=40,
+            font=("Helvetica", 20)
+        )
+        self.emulateGoogleSheetsFailure.grid(row=4, column=0, columnspan=2, padx=10, pady=5, sticky="ew")
+        self.emulateGoogleSheetsFailure.select() if Globals.EmulateGoogleSheetsFailure else self.emulateGoogleSheetsFailure.deselect()
+
 
     def build_filters(self):
         self.filters = tk.CTkFrame(master=self, fg_color="#2F2F2F")
@@ -200,6 +231,25 @@ class Frame(tk.CTkScrollableFrame):
         )
         self.showVideoCheck.grid(row=5, column=0, columnspan=2, padx=10, pady=5, sticky="ew")
         self.showVideoCheck.select() if Globals.SHOW_VIDEO else self.showVideoCheck.deselect()
+
+    def reset_everything(self):
+        # --- Delete files ---
+        for path in [self.file1, self.file2]:
+            try:
+                if os.path.exists(path):
+                    os.remove(path)
+                    print(f"Deleted file: {path}")
+                else:
+                    print(f"File not found: {path}")
+            except Exception as e:
+                print(f"Error deleting {path}: {e}")
+
+        # --- Clear Google Sheet ---
+        try:
+            GoogleSheets.clear_sheet("Sheet1")
+            print("Google Sheet cleared successfully.")
+        except Exception as e:
+            print("Failed to clear Google Sheet:", e)
 
 
     def apply_min_lap_time(self):
