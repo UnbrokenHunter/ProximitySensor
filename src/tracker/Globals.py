@@ -33,6 +33,7 @@ RecordRequirement = 825055 # Meters
 # Debug
 Mode = "Camera"
 ControlsLapCount = "Local"
+UIDelay = 0.5
 
 # ===============================
 # VIDEO SOURCE CONFIGURATION

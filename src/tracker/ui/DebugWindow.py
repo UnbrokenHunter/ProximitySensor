@@ -13,7 +13,7 @@ class Frame(tk.CTkScrollableFrame):
 
         # Title
         self.titleFrame = tk.CTkFrame(master=self, fg_color="#1F6AA5")
-        self.titleFrame.grid(row=0, column=0, columnspan=2, padx=10, pady=7, sticky="nsew")
+        self.titleFrame.grid(row=0, column=0, columnspan=2, padx=10, pady=(10, 5), sticky="nsew")
 
         self.title = tk.CTkLabel(
             master=self.titleFrame,
@@ -24,9 +24,24 @@ class Frame(tk.CTkScrollableFrame):
         )
         self.title.pack(side="left", padx=10, pady=7)
 
-        # Mode ComboBox
+        self.build_general()
+        self.build_filters()
+        self.build_camera()
+
+    def build_general(self):
+        self.general = tk.CTkFrame(master=self, fg_color="#2A2A2A")
+        self.general.grid(row=1, column=0, columnspan=2, padx=10, pady=(5, 10), sticky="nsew")
+        self.general.grid_columnconfigure(0, weight=1)
+        self.general.grid_columnconfigure(1, weight=1)
+
+        tk.CTkLabel(
+            master=self.general,
+            text="General Settings",
+            font=("Helvetica", 24, "italic")
+        ).grid(row=0, column=0, columnspan=2, sticky="w", padx=10, pady=(10, 5))
+
         self.mode = tk.CTkComboBox(
-            master=self,
+            master=self.general,
             values=["Camera", "Sensor Emulator"],
             command=lambda choice: (
                 setattr(Globals, "Mode", choice),
@@ -36,30 +51,20 @@ class Frame(tk.CTkScrollableFrame):
         )
         self.mode.grid(row=1, column=0, columnspan=2, padx=10, pady=5, sticky="ew")
         self.mode.set(Globals.Mode)
-
-        # Min Lap Time Entry
-        self.minLapTimeEntry = tk.CTkEntry(
-            master=self,
-            placeholder_text=f"Min Lap: {Globals.MinLapTime}s",
-            height=40,
-            font=("Helvetica", 20)
+        
+        self.controlsLaps = tk.CTkComboBox(
+            master=self.general,
+            values=["Local", "Google"],
+            command=lambda choice: (
+                setattr(Globals, "ControlsLapCount", choice),
+                print("Controls Lap Count:", choice)
+            )
         )
-        self.minLapTimeEntry.grid(row=2, column=0, columnspan=2, padx=10, pady=5, sticky="ew")
-        self.minLapTimeEntry.bind("<FocusOut>", lambda e: self.apply_min_lap_time())
+        self.controlsLaps.grid(row=2, column=0, columnspan=2, padx=10, pady=5, sticky="ew")
+        self.controlsLaps.set(Globals.ControlsLapCount)
 
-        # Broken Sensor Threshold Entry
-        self.brokenSensorEntry = tk.CTkEntry(
-            master=self,
-            placeholder_text=f"Broken Sensor: {Globals.TimeSinceLastFalseThreshold}s",
-            height=40,
-            font=("Helvetica", 20)
-        )
-        self.brokenSensorEntry.grid(row=3, column=0, columnspan=2, padx=10, pady=5, sticky="ew")
-        self.brokenSensorEntry.bind("<FocusOut>", lambda e: self.apply_broken_sensor())
-
-        # Enable Logging Checkbox
         self.enableLoggingCheck = tk.CTkCheckBox(
-            master=self,
+            master=self.general,
             text="Enable Logging",
             command=lambda: (
                 setattr(Globals, "EnableLogging", self.enableLoggingCheck.get() == 1),
@@ -68,20 +73,134 @@ class Frame(tk.CTkScrollableFrame):
             height=40,
             font=("Helvetica", 20)
         )
-        self.enableLoggingCheck.grid(row=4, column=0, columnspan=2, padx=10, pady=5, sticky="ew")
+        self.enableLoggingCheck.grid(row=3, column=0, columnspan=2, padx=10, pady=5, sticky="ew")
         self.enableLoggingCheck.select() if Globals.EnableLogging else self.enableLoggingCheck.deselect()
 
-        # Lap Control Mode ComboBox
-        self.controlsLaps = tk.CTkComboBox(
-            master=self,
-            values=["Local", "Google"],
-            command=lambda choice: (
-                setattr(Globals, "ControlsLapCount", choice),
-                print("Controls Lap Count:", choice)
+    def build_filters(self):
+        self.filters = tk.CTkFrame(master=self, fg_color="#2F2F2F")
+        self.filters.grid(row=2, column=0, columnspan=2, padx=10, pady=(0, 10), sticky="nsew")
+        self.filters.grid_columnconfigure(0, weight=1)
+        self.filters.grid_columnconfigure(1, weight=1)
+
+        tk.CTkLabel(
+            master=self.filters,
+            text="Filters",
+            font=("Helvetica", 24, "italic")
+        ).grid(row=0, column=0, columnspan=2, sticky="w", padx=10, pady=(10, 5))
+
+        self.minLapTimeEntry = tk.CTkEntry(
+            master=self.filters,
+            placeholder_text=f"Min Lap: {Globals.MinLapTime}s",
+            height=40,
+            font=("Helvetica", 20)
+        )
+        self.minLapTimeEntry.grid(row=1, column=0, columnspan=2, padx=10, pady=5, sticky="ew")
+        self.minLapTimeEntry.bind("<FocusOut>", lambda e: self.apply_min_lap_time())
+        self.minLapTimeEntry.bind("<Return>", lambda e: self.apply_min_lap_time())
+
+        self.brokenSensorEntry = tk.CTkEntry(
+            master=self.filters,
+            placeholder_text=f"Broken Sensor: {Globals.TimeSinceLastFalseThreshold}s",
+            height=40,
+            font=("Helvetica", 20)
+        )
+        self.brokenSensorEntry.grid(row=2, column=0, columnspan=2, padx=10, pady=5, sticky="ew")
+        self.brokenSensorEntry.bind("<FocusOut>", lambda e: self.apply_broken_sensor())
+        self.brokenSensorEntry.bind("<Return>", lambda e: self.apply_broken_sensor())
+
+    def build_camera(self):
+        self.camera = tk.CTkFrame(master=self, fg_color="#2B2B2B")
+        self.camera.grid(row=3, column=0, columnspan=2, padx=10, pady=(0, 10), sticky="nsew")
+        self.camera.grid_columnconfigure(0, weight=1)
+        self.camera.grid_columnconfigure(1, weight=1)
+
+        tk.CTkLabel(
+            master=self.camera,
+            text="Camera Settings",
+            font=("Helvetica", 24, "italic")
+        ).grid(row=0, column=0, columnspan=2, sticky="w", padx=10, pady=(10, 5))
+
+        # === Image Size Dropdown ===
+        tk.CTkLabel(master=self.camera, text="Image Size:", font=("Helvetica", 18)).grid(
+            row=1, column=0, sticky="w", padx=10, pady=5
+        )
+
+        image_sizes = ["320", "416", "640", "960", "1280", "1920"]
+        self.imageSizeDropdown = tk.CTkComboBox(
+            master=self.camera,
+            values=image_sizes,
+            command=lambda v: (
+                setattr(Globals, "IMAGE_SIZE", int(v)),
+                print("Image Size:", Globals.IMAGE_SIZE)
             )
         )
-        self.controlsLaps.grid(row=5, column=0, columnspan=2, padx=10, pady=5, sticky="ew")
-        self.controlsLaps.set(Globals.ControlsLapCount)
+        self.imageSizeDropdown.grid(row=1, column=1, padx=10, pady=5, sticky="ew")
+        self.imageSizeDropdown.set(str(Globals.IMAGE_SIZE))
+
+        # === Frame Size Dropdown ===
+        tk.CTkLabel(master=self.camera, text="Frame Size:", font=("Helvetica", 18)).grid(
+            row=2, column=0, sticky="w", padx=10, pady=5
+        )
+
+        frame_sizes = {
+            "320x240": (320, 240),
+            "640x480": (640, 480),
+            "800x600": (800, 600),
+            "1280x720": (1280, 720),
+            "1920x1080": (1920, 1080)
+        }
+        self.frameSizeDropdown = tk.CTkComboBox(
+            master=self.camera,
+            values=list(frame_sizes.keys()),
+            command=lambda choice: (
+                setattr(Globals, "FRAME_WIDTH", frame_sizes[choice][0]),
+                setattr(Globals, "FRAME_HEIGHT", frame_sizes[choice][1]),
+                print("Frame Size:", frame_sizes[choice])
+            )
+        )
+        self.frameSizeDropdown.grid(row=2, column=1, padx=10, pady=5, sticky="ew")
+        self.frameSizeDropdown.set(f"{Globals.FRAME_WIDTH}x{Globals.FRAME_HEIGHT}")
+
+        # === Confidence Threshold Entry ===
+        self.confThresholdEntry = tk.CTkEntry(
+            master=self.camera,
+            placeholder_text=f"Confidence Threshold (0–1): {Globals.CONFIDENCE_THRESHOLD}",
+            height=40,
+            font=("Helvetica", 20)
+        )
+        self.confThresholdEntry.grid(row=3, column=0, columnspan=2, padx=10, pady=5, sticky="ew")
+        self.confThresholdEntry.bind("<FocusOut>", lambda e: self.apply_clamped_entry(
+            self.confThresholdEntry, "CONFIDENCE_THRESHOLD", 0.0, 1.0))
+        self.confThresholdEntry.bind("<Return>", lambda e: self.apply_clamped_entry(
+            self.confThresholdEntry, "CONFIDENCE_THRESHOLD", 0.0, 1.0))
+
+        # === IoU Threshold Entry ===
+        self.iouThresholdEntry = tk.CTkEntry(
+            master=self.camera,
+            placeholder_text=f"IoU Threshold (0–1): {Globals.IOU_THRESHOLD}",
+            height=40,
+            font=("Helvetica", 20)
+        )
+        self.iouThresholdEntry.grid(row=4, column=0, columnspan=2, padx=10, pady=5, sticky="ew")
+        self.iouThresholdEntry.bind("<FocusOut>", lambda e: self.apply_clamped_entry(
+            self.iouThresholdEntry, "IOU_THRESHOLD", 0.0, 1.0))
+        self.iouThresholdEntry.bind("<Return>", lambda e: self.apply_clamped_entry(
+            self.iouThresholdEntry, "IOU_THRESHOLD", 0.0, 1.0))
+
+        # === Show Video Checkbox ===
+        self.showVideoCheck = tk.CTkCheckBox(
+            master=self.camera,
+            text="Show Video",
+            command=lambda: (
+                setattr(Globals, "SHOW_VIDEO", self.showVideoCheck.get() == 1),
+                print("Show Video:", Globals.SHOW_VIDEO)
+            ),
+            height=40,
+            font=("Helvetica", 20)
+        )
+        self.showVideoCheck.grid(row=5, column=0, columnspan=2, padx=10, pady=5, sticky="ew")
+        self.showVideoCheck.select() if Globals.SHOW_VIDEO else self.showVideoCheck.deselect()
+
 
     def apply_min_lap_time(self):
         text = self.minLapTimeEntry.get().strip()
@@ -100,3 +219,15 @@ class Frame(tk.CTkScrollableFrame):
                 print("Broken Sensor Threshold:", Globals.TimeSinceLastFalseThreshold)
             except ValueError:
                 print("Invalid Broken Sensor Threshold entry")
+
+def apply_clamped_entry(self, entry_widget, global_key, min_val, max_val):
+    text = entry_widget.get().strip()
+    if not text:
+        return
+    try:
+        val = float(text)
+        val = max(min_val, min(max_val, val))  # clamp between min_val and max_val
+        setattr(Globals, global_key, val)
+        print(f"{global_key}:", val)
+    except ValueError:
+        print(f"Invalid value for {global_key}: '{text}'")
