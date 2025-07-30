@@ -18,10 +18,7 @@ Drivers = ["Mac Spear", "Mitchell Wolken", "Josh Wagner",
            "Ciarán Greer", "Nathan Salamin", "Chris Lipp",
            "Hunter Frederick", "John Walter Whisenhunt", 
            "Other"]
-LapCount = 0
 CurrentLapTime = 0
-LastLapTime = 0
-LastLapInfo = None
 OfflineLaps = []  # List of lap times not yet saved to Google Sheets
 
 # Statics

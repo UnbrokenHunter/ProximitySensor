@@ -4,6 +4,7 @@ import json
 import os
 
 from . import Globals
+from . import Statistics
 from .utils import TimeUtils
 from .sensors import Camera
 from .sensors import SensorEmulator
@@ -30,21 +31,19 @@ def SaveLap():
         print(f"{timeSinceLastFalse} true readings in a row. Likely fraudulent. Lap skipped.")
         return
 
-    Globals.LastLapTime = Globals.CurrentLapTime
-    Globals.LapCount += 1
-    Globals.LastLapInfo = {
-        "lap_time": Globals.CurrentLapTime,
-        "lap_count": Globals.LapCount,
-        "driver": Globals.CurrentDriver,
-        "timestamp": time.time()
-    }
-
     threading.Thread(target=SaveToGoogleSheets, daemon=True).start()
     lapStartTime = time.time()
 
 def SaveToGoogleSheets():
-    info = Globals.LastLapInfo
-    LocalSheets.SaveData(LocalSheets.find_first_empty_cell_in_column("Sheet1"), info["lap_time"])
+    info = {
+        "lap_time": Globals.CurrentLapTime,
+        "lap_count": Statistics.GetLapCount(),
+        "driver": Globals.CurrentDriver,
+        "timestamp": time.time()
+    }
+
+    LocalSheets.SaveData(LocalSheets.find_first_empty_cell_in_column(), info["lap_time"])
+
 
     if Globals.EmulateGoogleSheetsFailure:
         buffer_offline_lap(info)
@@ -57,14 +56,14 @@ def SaveToGoogleSheets():
             for cached in Globals.OfflineLaps:
                 GoogleSheets.SaveDataManual(
                     GoogleSheets.find_first_empty_cell_in_column("Sheet1"), 
-                    cached['lap_count'], 
+                    cached['lap_count'] + 1, 
                     cached["lap_time"], 
                     cached['driver'], 
                     time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(cached['timestamp'])),
                     "Buffered Offline"
                 )
-                
                 print(f"Recovered Lap {cached['lap_count']} by {cached['driver']} @ {TimeUtils.FormatTime(cached['timestamp'])}")
+                
             Globals.OfflineLaps.clear()
             save_offline_laps_to_disk()  # Clear disk backup too
 

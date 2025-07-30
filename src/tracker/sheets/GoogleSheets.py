@@ -135,7 +135,7 @@ def SaveDataManual(Min, LapCount, LapTime, Driver, Time, Notes):
 
 
 def SaveData(Min, LapTime):
-    SaveDataManual(Min, Globals.LapCount, LapTime, Globals.CurrentDriver, time.strftime("%Y-%m-%d %H:%M:%S"), None)
+    SaveDataManual(Min, Statistics.GetLapCount(), LapTime, Globals.CurrentDriver, time.strftime("%Y-%m-%d %H:%M:%S"), None)
 
 def clear_sheet(sheet_name):
     try:

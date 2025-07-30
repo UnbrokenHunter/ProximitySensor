@@ -1,15 +1,16 @@
 import time
 
 from . import Globals
+from .sheets import LocalSheets
 
 def GetDistanceDriven():
-    return Globals.LapCount * Globals.TrackLength
+    return GetLapCount() * Globals.TrackLength
         
 def GetLapCount():
-    return Globals.LapCount
+    return LocalSheets.find_first_empty_cell_in_column() - 1
                 
 def GetLastLapTime():
-    return Globals.LastLapTime
+    return LocalSheets.read_cell(LocalSheets.find_first_empty_cell_in_column() - 1, 'B')
         
 def GetAverageLapTime():
     if GetLapCount() == 0:
