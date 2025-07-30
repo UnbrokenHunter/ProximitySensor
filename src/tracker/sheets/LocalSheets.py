@@ -10,7 +10,7 @@ SPREADSHEET_FILE_PATH = "sheets_backup.xlsx"
 
 def get_or_create_workbook(file_path):
     """Check if the spreadsheet file exists. If not, create it and add headers."""
-    headers = ["Lap Count", "Lap Time", "Driver Name", "Distance Driven", "Instant Speed", "Average Speed", "Time"]
+    headers = ["Lap Count", "Lap Time", "Driver Name", "Time"]
     if not os.path.exists(file_path):
         wb = Workbook()
         ws = wb.active
@@ -63,7 +63,7 @@ def find_first_empty_cell_in_column(sheet_name, column_letter='A'):
     
     return row_number
 
-def SaveDataManual(Min, LapTime, Driver, DistanceDriven, InstantSpeed, Time):
+def SaveDataManual(Min, LapTime, Driver, Time):
     try:
         sheet_name = "Sheet1"
         minRow = Min
@@ -77,24 +77,12 @@ def SaveDataManual(Min, LapTime, Driver, DistanceDriven, InstantSpeed, Time):
         # Driver Name
         update_cell(sheet_name, minRow, 'C', Driver)
 
-        # Distance Driven
-        distance_driven = f"{DistanceDriven}km"
-        update_cell(sheet_name, minRow, 'D', distance_driven)
-
-        # Instant Speed
-        instant_speed_mph = f"{((Globals.CarLength / InstantSpeed) * 3600) * 0.621371192}"  # From Car Length / Time To Drive that Distance to Km / H to Mph
-        update_cell(sheet_name, minRow, 'E', instant_speed_mph)
-
-        # Average Speed
-        average_speed_mph = f"{((DistanceDriven / LapTime) * 3600) * 0.621371192}"  # From Km / S to Km / H to Mph
-        update_cell(sheet_name, minRow, 'F', average_speed_mph)
-
         # Time
-        update_cell(sheet_name, minRow, 'G', Time)
+        update_cell(sheet_name, minRow, 'D', Time)
 
     except Exception as err:
         print(err)
 
-def SaveData(Min, LapTime, InstantSpeed):
-    SaveDataManual(Min, LapTime, Globals.CurrentDriver, Statistics.GetDistanceDriven(), InstantSpeed, time.strftime("%Y-%m-%d %H:%M:%S"))
+def SaveData(Min, LapTime):
+    SaveDataManual(Min, LapTime, Globals.CurrentDriver, time.strftime("%Y-%m-%d %H:%M:%S"))
 

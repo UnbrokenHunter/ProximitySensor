@@ -111,7 +111,7 @@ def find_first_empty_cell_in_column(sheet_name):
         print(err)
         return None
 
-def SaveDataManual(Min, LapTime, Driver, DistanceDriven, InstantSpeed, Time):
+def SaveDataManual(Min, LapTime, Driver, Time):
     try:
         minRow = Min
 
@@ -123,21 +123,12 @@ def SaveDataManual(Min, LapTime, Driver, DistanceDriven, InstantSpeed, Time):
         # Driver Name
         update_cell(f"Sheet1!C{minRow}", Driver)
 
-        # Distance Driven
-        update_cell(f"Sheet1!D{minRow}", f"{DistanceDriven}km")
-
-        # Instant Speed
-        update_cell(f"Sheet1!E{minRow}", f"{((Globals.CarLength / InstantSpeed) * 3600) * 0.621371192}") # From Car Length / Time To Drive that Distance to Km / H to Mph
-
-        # Average Speed
-        update_cell(f"Sheet1!F{minRow}", f"{((DistanceDriven / LapTime) * 3600) * 0.621371192}") # From Km / S to Km / H to Mph
-
         # Time
-        update_cell(f"Sheet1!G{minRow}", Time)
+        update_cell(f"Sheet1!D{minRow}", Time)
 
     except HttpError as err:
         print(err)
 
 
-def SaveData(Min, LapTime, InstantSpeed):
-    SaveDataManual(Min, LapTime, Globals.CurrentDriver, Statistics.GetDistanceDriven(), InstantSpeed, time.strftime("%Y-%m-%d %H:%M:%S"))
+def SaveData(Min, LapTime):
+    SaveDataManual(Min, LapTime, Globals.CurrentDriver, time.strftime("%Y-%m-%d %H:%M:%S"))
