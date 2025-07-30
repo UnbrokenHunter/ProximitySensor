@@ -2,7 +2,9 @@ import time
 import threading
 import customtkinter as tk
 
+from ..sheets import LocalSheets
 from ..utils import TimeUtils
+from ..utils.event_bus import event_bus
 from .. import Globals
 from .. import Statistics
 
@@ -11,7 +13,7 @@ class Scrollable(tk.CTkScrollableFrame):
         super().__init__(master, **kwargs)
         self.itemList = []
 
-    def addItem(self, LapCount, Driver, DistanceDriven, LastLapTime):
+    def addItem(self, LapCount, LastLapTime, Driver, Timestamp):
         size = 13
         padding = 10
 
@@ -24,9 +26,15 @@ class Scrollable(tk.CTkScrollableFrame):
             tk.CTkLabel(row, text=value_text, anchor="w", font=("Helvetica", size)).grid(row=1, column=col, sticky="w", padx=padding)
 
         make_pair("Lap Count:", str(LapCount), 0)
-        make_pair("Driver:", str(Driver), 1)
-        make_pair("Distance:", f"{float(DistanceDriven) / 1000:.2f} km", 2)
-        make_pair("Lap Time:", str(LastLapTime), 3)
+        make_pair("Lap Time:", str(LastLapTime), 1)
+        make_pair("Driver:", str(Driver), 2)
+
+        if isinstance(Timestamp, (float, int)):
+            timestamp_str = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(Timestamp))
+        else:
+            timestamp_str = str(Timestamp)
+
+        make_pair("Timestamp:", timestamp_str, 3)
 
         # Insert new row visually at the top
         if self.itemList:
@@ -45,7 +53,6 @@ class Frame(tk.CTkFrame):
     def __init__(self, master, **kwargs):
         super().__init__(master, **kwargs)
 
-        self.LapCount = 0
         padding = 10
 
         # ========== TIMER LABELS ==========
@@ -75,24 +82,20 @@ class Frame(tk.CTkFrame):
         # ========== SCROLLABLE PANEL ==========
         self.scrollable = Scrollable(self)
         self.scrollable.pack(fill="both", expand=True, padx=padding, pady=10)
+        
+        # Subscribe to update event
+        event_bus.subscribe("refresh_recent_laps", self.refresh_recent_laps)
 
-        # ========== UPDATE LOOP ==========
-        def Update():
-            while True:
-                if self.LapCount != Globals.LapCount:
-                    self.LapCount = Globals.LapCount
-                    self.scrollable.addItem(
-                        Globals.LapCount,
-                        Statistics.GetCurrentDriver(),
-                        f"{Statistics.GetDistanceDriven():.2f}",
-                        TimeUtils.FormatTime(Statistics.GetLastLapTime())
-                    )
+    def refresh_recent_laps(self):
+        for row in self.scrollable.itemList:
+            row.destroy()
+        self.scrollable.itemList.clear()
 
-                self.time.configure(text=TimeUtils.FormatTime(time.time() - Globals.StartTime))
-                self.currentLapTime.configure(text=TimeUtils.FormatTime(Globals.CurrentLapTime))
-                self.averageLapTime.configure(text=TimeUtils.FormatTime(Statistics.GetAverageLapTime()))
-                self.projectedEndTime.configure(text=TimeUtils.FormatTime(Statistics.GetProjectedEndTime()))
-
-                time.sleep(Globals.UIDelay)
-
-        threading.Thread(target=Update, daemon=True).start()
+        laps = LocalSheets.get_last_n_laps()
+        for lap in laps:
+            self.scrollable.addItem(
+                lap["lap_count"],
+                lap["lap_time"],
+                lap["driver"],
+                lap["timestamp"]
+            )

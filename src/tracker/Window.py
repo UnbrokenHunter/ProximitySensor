@@ -20,8 +20,8 @@ class App(tk.CTk):
         self.frame = TitleWindow.Frame(master=self)
         self.frame.grid(row=0, column=0, padx=(20, 10), pady=20, sticky="nswe")
 
-        self.frame = DataWindow.Frame(master=self)
-        self.frame.grid(row=0, column=1, padx=10, pady=20, sticky="nswe")
+        self.data = DataWindow.Frame(master=self)
+        self.data.grid(row=0, column=1, padx=10, pady=20, sticky="nswe")
 
         self.debug = DebugWindow.Frame(master=self)  # Place your debug frame in this new window
         self.debug.grid(row=0, column=2, padx=(10, 20), pady=20, sticky="nswe")

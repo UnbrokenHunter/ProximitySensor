@@ -6,6 +6,7 @@ import os
 from . import Globals
 from . import Statistics
 from .utils import TimeUtils
+from .utils.event_bus import event_bus
 from .sensors import Camera
 from .sensors import SensorEmulator
 from .sheets import GoogleSheets
@@ -43,7 +44,7 @@ def SaveToGoogleSheets():
     }
 
     LocalSheets.SaveData(LocalSheets.find_first_empty_cell_in_column(), info["lap_time"])
-
+    event_bus.emit("refresh_recent_laps")
 
     if Globals.EmulateGoogleSheetsFailure:
         buffer_offline_lap(info)
