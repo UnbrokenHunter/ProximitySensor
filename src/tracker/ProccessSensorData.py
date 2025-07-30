@@ -5,7 +5,7 @@ from . import Globals
 from .utils import TimeUtils
 from .sensors import Camera
 from .sensors import SensorEmulator
-from .sheets import Sheets
+from .sheets import GoogleSheets
 from .sheets import LocalSheets
 
 previousValue = False

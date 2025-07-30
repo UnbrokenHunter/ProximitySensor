@@ -4,7 +4,7 @@ import time
 from .. import Globals
 from .. import ProccessSensorData
 from ..utils import TimeUtils
-from ..sheets import Sheets, LocalSheets
+from ..sheets import GoogleSheets, LocalSheets
 
 class Frame(tk.CTkFrame):     
     def __init__(self, master, **kwargs):
