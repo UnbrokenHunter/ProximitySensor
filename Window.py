@@ -2,7 +2,7 @@ import customtkinter as tk
 import TitleWindow
 import DataWindow
 import DebugWindow
-import Sensor
+import Camera
 
 class App(tk.CTk):
     def __init__(self):
@@ -11,7 +11,7 @@ class App(tk.CTk):
         tk.set_default_color_theme("blue")  # Themes: blue (default), dark-blue, green
 
         self.title("Lap Tracker")
-        self.geometry("1200x500")
+        self.geometry("1600x600")
 
         self.grid_rowconfigure(0, weight=1)  # configure grid system
         self.grid_columnconfigure(0, weight=1)
@@ -27,7 +27,7 @@ class App(tk.CTk):
         self.debug = DebugWindow.Frame(master=self)  # Place your debug frame in this new window
         self.debug.grid(row=0, column=2, padx=(10, 20), pady=20, sticky="nswe")
 
-        Sensor.Run()
+        Camera.Run()
 
 if __name__ == "__main__":
     app = App()

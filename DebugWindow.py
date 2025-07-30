@@ -2,6 +2,7 @@ import customtkinter as tk
 import Globals
 import Sensor
 import SensorEmulator
+import Camera
 import MotionSensor
 
 class Frame(tk.CTkScrollableFrame):  
@@ -16,6 +17,8 @@ class Frame(tk.CTkScrollableFrame):
         SensorEmulator.Run()
         Sensor.Run()
         MotionSensor.Run()
+        Camera.Run()
+
 
     def EnableLogging(self):
         Globals.EnableLogging = not Globals.EnableLogging
@@ -58,7 +61,7 @@ class Frame(tk.CTkScrollableFrame):
         self.title.pack(padx=(10, 40), pady=10, fill="x")
 
         self.mode = tk.CTkComboBox(master=self, 
-                                     values=["Sensor", "Motion Sensor", "Sensor Emulator"],
+                                     values=["Camera", "Sensor", "Motion Sensor", "Sensor Emulator"],
                                      command=self.Mode)
         self.mode.grid(row=1, column=0, columnspan=2, padx=10, pady=5, sticky="ew")
 
@@ -74,7 +77,7 @@ class Frame(tk.CTkScrollableFrame):
         self.delayButton = tk.CTkButton(master=self, text="Select Delay", command=self.Delay, height=40, font=("Helvetica", 20))
         self.delayButton.grid(row=3, column=1, padx=(5, 10), pady=5)
 
-        self.uidelayEntry = tk.CTkEntry(master=self, placeholder_text=f"Delay: {Globals.SensorDelay}s", height=40, font=("Helvetica", 20))
+        self.uidelayEntry = tk.CTkEntry(master=self, placeholder_text=f"UI Delay: {Globals.SensorDelay}s", height=40, font=("Helvetica", 20))
         self.uidelayEntry.grid(row=4, column=0, padx=(10, 5), pady=5)
 
         self.uidelayButton = tk.CTkButton(master=self, text="Select Delay", command=self.Delay, height=40, font=("Helvetica", 20))

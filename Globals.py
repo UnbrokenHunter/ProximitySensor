@@ -78,7 +78,7 @@ TrackLength = 0.4 # 0.4km
 RecordRequirement = 825055 # Meters
 
 # Debug
-Mode = "Sensor"
+Mode = "Camera"
 Pin = 4
 UIDelay = 0.5
 SensorDelay = 0.1

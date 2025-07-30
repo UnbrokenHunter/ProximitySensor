@@ -77,4 +77,4 @@ def SensorData(value):
 
         previousValue = value
 
-        time.sleep(Globals.SensorDelay)
+        # time.sleep(Globals.SensorDelay)
