@@ -83,6 +83,18 @@ class Frame(tk.CTkFrame):
         self.scrollable = Scrollable(self)
         self.scrollable.pack(fill="both", expand=True, padx=padding, pady=10)
         
+                # ========== UPDATE LOOP ==========
+        def Update():
+            while True:
+                self.time.configure(text=TimeUtils.FormatTime(time.time() - Globals.StartTime))
+                self.currentLapTime.configure(text=TimeUtils.FormatTime(Globals.CurrentLapTime))
+                self.averageLapTime.configure(text=TimeUtils.FormatTime(Statistics.GetAverageLapTime()))
+                self.projectedEndTime.configure(text=TimeUtils.FormatTime(Statistics.GetProjectedEndTime()))
+
+                time.sleep(Globals.UIDelay)
+
+        threading.Thread(target=Update, daemon=True).start()
+        
         # Subscribe to update event
         event_bus.subscribe("refresh_recent_laps", self.refresh_recent_laps)
 
@@ -99,3 +111,4 @@ class Frame(tk.CTkFrame):
                 lap["driver"],
                 lap["timestamp"]
             )
+
