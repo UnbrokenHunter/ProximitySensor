@@ -16,9 +16,9 @@ DEVICE = "cuda:0"
 # VIDEO SOURCE CONFIGURATION
 # ===============================
 
-CAMERA_INDEX = 1
-FRAME_WIDTH = 1280 / 3
-FRAME_HEIGHT = 720 / 3
+CAMERA_INDEX = 0
+FRAME_WIDTH = 640
+FRAME_HEIGHT = 480
 
 # ===============================
 # PREDICTION PARAMETERS
