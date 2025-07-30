@@ -9,7 +9,7 @@ def ReadData():
     trackLength = 20
 
     while True:
-        if Globals.Mode == "Sensor Emulator":
+        if Globals.Mode == "Sensor Emulator" and not Globals.SensorStopEvent.is_set():
             trackPosition += random.random() * 1.5
 
             trackPosition = trackPosition % trackLength
@@ -21,9 +21,3 @@ def ReadData():
 
         else:
             return        
-
-def Run():
-    if Globals.Mode == "Sensor Emulator":
-        t1 = threading.Thread(target=ReadData, daemon=True)
-        t1.start()
-

@@ -1,4 +1,8 @@
 import time
+import threading
+
+SensorStopEvent = threading.Event()
+SensorThread = None  # To store a reference to the running thread
 
 TrackingEnabled = False
 LapFilters = True

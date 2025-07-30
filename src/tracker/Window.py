@@ -1,7 +1,7 @@
 import customtkinter as tk
 
 from .ui import TitleWindow, DataWindow, DebugWindow
-from .sensors import Camera
+from . import ProccessSensorData
 
 class App(tk.CTk):
     def __init__(self):
@@ -26,8 +26,7 @@ class App(tk.CTk):
         self.debug = DebugWindow.Frame(master=self)  # Place your debug frame in this new window
         self.debug.grid(row=0, column=2, padx=(10, 20), pady=20, sticky="nswe")
 
-        Camera.Run()
-
+        ProccessSensorData.StartSensor()
 
 def run():
     app = App()

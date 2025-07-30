@@ -51,7 +51,7 @@ def DetectionLoop():
         print("❌ Failed to open video source.")
         return
 
-    while Globals.Mode == "Camera":
+    while Globals.Mode == "Camera" and not Globals.SensorStopEvent.is_set():
         ret, frame = cap.read()
         if not ret:
             continue
@@ -88,13 +88,4 @@ def DetectionLoop():
     cap.release()
     cv2.destroyAllWindows()
 
-# ===============================
-# THREAD STARTER
-# ===============================
-
-def Run():
-
-    if Globals.Mode == "Camera":
-        t1 = threading.Thread(target=DetectionLoop, daemon=True)
-        t1.start()
 

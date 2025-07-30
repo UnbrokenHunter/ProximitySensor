@@ -2,6 +2,8 @@ import time
 import threading
 
 from . import Globals
+from .sensors import Camera
+from .sensors import SensorEmulator
 from .sheets import Sheets
 from .sheets import LocalSheets
 
@@ -79,3 +81,30 @@ def SensorData(value):
         previousValue = value
 
         # time.sleep(Globals.SensorDelay)
+
+def StartSensor():
+    if Globals.SensorThread and Globals.SensorThread.is_alive():
+        print("Sensor thread already running.")
+        return
+
+    if Globals.Mode == "Camera":
+        Globals.SensorStopEvent.clear()
+        Globals.SensorThread = threading.Thread(target=Camera.DetectionLoop, daemon=True)
+        Globals.SensorThread.start()
+
+    elif Globals.Mode == "Sensor Emulator":
+        Globals.SensorStopEvent.clear()
+        Globals.SensorThread = threading.Thread(target=SensorEmulator.ReadData, daemon=True)
+        Globals.SensorThread.start()
+
+def StopSensor():
+    Globals.SensorStopEvent.set()
+
+    if Globals.SensorThread:
+        Globals.SensorThread.join(timeout=2)
+        print("Sensor thread stopped.")
+        Globals.SensorThread = None
+    
+def RestartSensor():
+    StopSensor()
+    StartSensor()
