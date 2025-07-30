@@ -1,14 +1,15 @@
 import cv2
 import threading
 from ultralytics import YOLO
-import Globals
-import ProccessSensorData
+
+from .. import Globals
+from .. import ProccessSensorData
 
 # ===============================
 # MODEL CONFIGURATION
 # ===============================
 
-MODEL_PATH = "best.pt"
+MODEL_PATH = "models/best.pt"
 DEVICE = "cuda:0"
 
 # ===============================

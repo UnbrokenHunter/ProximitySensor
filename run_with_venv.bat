@@ -10,7 +10,7 @@ if not exist %VENV_DIR% (
 call %VENV_DIR%\Scripts\activate
 
 :: Install dependencies if needed
-pip install -r requirements/ requirements.txt
+pip install -r requirements\requirements.txt
 
 :: Run your script
-python main.py
+python scripts\main.py

@@ -1,7 +1,8 @@
 import customtkinter as tk
-import Globals
-import SensorEmulator
-import Camera
+
+from .. import Globals
+from ..sensors import SensorEmulator
+from ..sensors import Camera
 
 class Frame(tk.CTkScrollableFrame):  
     def __init__(self, master, **kwargs):

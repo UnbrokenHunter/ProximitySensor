@@ -1,5 +1,6 @@
-import Globals
 import time
+
+from . import Globals
 
 def GetDistanceDriven():
     return Globals.LapCount * Globals.TrackLength

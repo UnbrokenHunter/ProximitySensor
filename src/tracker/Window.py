@@ -1,8 +1,7 @@
 import customtkinter as tk
-import TitleWindow
-import DataWindow
-import DebugWindow
-import Camera
+
+from .ui import TitleWindow, DataWindow, DebugWindow
+from .sensors import Camera
 
 class App(tk.CTk):
     def __init__(self):
@@ -29,7 +28,8 @@ class App(tk.CTk):
 
         Camera.Run()
 
-if __name__ == "__main__":
+
+def run():
     app = App()
     app.mainloop()
 

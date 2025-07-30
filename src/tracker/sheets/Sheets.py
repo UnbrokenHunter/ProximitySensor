@@ -5,11 +5,11 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
+import time
 import threading
 
-import Globals
-import Statistics
-import time
+from .. import Globals
+from .. import Statistics
 
 # Define your scopes and spreadsheet ID here
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]

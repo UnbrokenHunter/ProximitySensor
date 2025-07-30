@@ -1,8 +1,9 @@
 import time
-import Globals
-import Sheets
-import LocalSheets
 import threading
+
+from . import Globals
+from .sheets import Sheets
+from .sheets import LocalSheets
 
 previousValue = False
 lapStartTime = time.time()

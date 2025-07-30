@@ -1,10 +1,10 @@
 import os
+import time
 import openpyxl
 from openpyxl import Workbook
-import time
 
-import Globals
-import Statistics
+from .. import Globals
+from .. import Statistics
 
 SPREADSHEET_FILE_PATH = "sheets_backup.xlsx"
 

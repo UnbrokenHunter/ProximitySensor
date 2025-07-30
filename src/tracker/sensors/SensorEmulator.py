@@ -1,7 +1,8 @@
 import threading
 import random 
-import ProccessSensorData
-import Globals
+
+from .. import ProccessSensorData
+from .. import Globals
 
 def ReadData():
     trackPosition = 0

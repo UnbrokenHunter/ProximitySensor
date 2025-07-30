@@ -5,7 +5,7 @@
       "label": "Run Python in venv",
       "type": "shell",
       "command": "cmd",
-      "args": ["/c", "${workspaceFolder}\\.vscode\\run_with_venv.bat"],
+      "args": ["/c", "${workspaceFolder}\\run_with_venv.bat"],
       "group": {
         "kind": "build",
         "isDefault": true

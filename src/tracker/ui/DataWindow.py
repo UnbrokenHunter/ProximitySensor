@@ -1,8 +1,9 @@
-import customtkinter as tk
-import Globals
-import Statistics
-import threading
 import time
+import threading
+import customtkinter as tk
+
+from .. import Globals
+from .. import Statistics
 
 class Scrollable(tk.CTkScrollableFrame):
     def __init__(self, master, **kwargs):

@@ -1,8 +1,9 @@
 import customtkinter as tk
-import Globals
-import Sheets
-import LocalSheets
 import time
+
+from .. import Globals
+from ..sheets import Sheets, LocalSheets
+
 
 class Frame(tk.CTkFrame):     
     
