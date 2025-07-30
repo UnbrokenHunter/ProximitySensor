@@ -37,7 +37,7 @@ class Frame(tk.CTkFrame):
             )
         )
         self.driver.set("None") 
-        self.driver.grid(row=2, column=0, padx=10, pady=(3, 10), sticky="ew")
+        self.driver.grid(row=2, column=0, columnspan=2, padx=10, pady=(3, 10), sticky="ew")
 
         self.enableTracking = tk.CTkCheckBox(
             master=self,
@@ -47,7 +47,7 @@ class Frame(tk.CTkFrame):
             font=("Helvetica", 20)
         )
         self.enableTracking.deselect()
-        self.enableTracking.grid(row=3, column=0, padx=10, pady=3, sticky="ew")
+        self.enableTracking.grid(row=3, column=0, columnspan=2, padx=10, pady=3, sticky="ew")
 
         self.lapFilters = tk.CTkCheckBox(
             master=self,
@@ -60,10 +60,10 @@ class Frame(tk.CTkFrame):
             font=("Helvetica", 20)
         )
         self.lapFilters.select()
-        self.lapFilters.grid(row=4, column=0, padx=10, pady=3, sticky="ew")
+        self.lapFilters.grid(row=4, column=0, columnspan=2, padx=10, pady=3, sticky="ew")
 
         self.restartSensorButton = tk.CTkButton(self, text="Restart Sensor", command=ProccessSensorData.RestartSensor)
-        self.restartSensorButton.grid(row=5, column=0, padx=10, pady=3, sticky="ew")
+        self.restartSensorButton.grid(row=5, column=0, columnspan=2, padx=10, pady=3, sticky="ew")
 
 
     def toggle_tracking(self):
