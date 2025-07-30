@@ -10,7 +10,7 @@ class App(tk.CTk):
         tk.set_default_color_theme("blue")  # Themes: blue (default), dark-blue, green
 
         self.title("Lap Tracker")
-        self.geometry("1600x600")
+        self.geometry("1400x600")
 
         self.grid_rowconfigure(0, weight=1)  # configure grid system
         self.grid_columnconfigure(0, weight=1)
