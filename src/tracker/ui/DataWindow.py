@@ -2,6 +2,7 @@ import time
 import threading
 import customtkinter as tk
 
+from ..utils import TimeUtils
 from .. import Globals
 from .. import Statistics
 
@@ -103,12 +104,12 @@ class Frame(tk.CTkFrame):
                     self.scrollable.addItem(Globals.LapCount, 
                                             Statistics.GetCurrentDriver(), 
                                             str(round(Statistics.GetDistanceDriven(), 2)), 
-                                            Globals.FormatTime(Statistics.GetLastLapTime()))
+                                            TimeUtils.FormatTime(Statistics.GetLastLapTime()))
                     
-                self.time.configure(text=Globals.FormatTime(time.time() - Globals.StartTime))
-                self.currentLapTime.configure(text=Globals.FormatTime(Globals.CurrentLapTime))
-                self.averageLapTime.configure(text=Globals.FormatTime(Statistics.GetAverageLapTime()))
-                self.projectedEndTime.configure(text=Globals.FormatTime(Statistics.GetProjectedEndTime()))
+                self.time.configure(text=TimeUtils.FormatTime(time.time() - Globals.StartTime))
+                self.currentLapTime.configure(text=TimeUtils.FormatTime(Globals.CurrentLapTime))
+                self.averageLapTime.configure(text=TimeUtils.FormatTime(Statistics.GetAverageLapTime()))
+                self.projectedEndTime.configure(text=TimeUtils.FormatTime(Statistics.GetProjectedEndTime()))
 
                 time.sleep(Globals.UIDelay)  # Delay for half a second
 

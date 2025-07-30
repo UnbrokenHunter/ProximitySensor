@@ -2,6 +2,7 @@ import customtkinter as tk
 import time
 
 from .. import Globals
+from ..utils import TimeUtils
 from ..sheets import Sheets, LocalSheets
 
 
@@ -15,7 +16,7 @@ class Frame(tk.CTkFrame):
 
     def EnableTracking(self):
         if (Globals.ManualTimeSet == True):
-            self.startTime.configure(text=Globals.ConvertToFormattedDate(Globals.StartTime))
+            self.startTime.configure(text=TimeUtils.ConvertToFormattedDate(Globals.StartTime))
             self.startTimeUnix.configure(text=Globals.StartTime)
         elif (Globals.RealStart == False):
             Globals.RealStart = True
