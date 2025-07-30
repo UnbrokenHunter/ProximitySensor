@@ -61,5 +61,8 @@ desktop.ini
 .env
 .env.*
 
+# Token
+token.json
+
 # Sheets Backup
 sheets_backup.xlsx
