@@ -13,10 +13,6 @@ class Frame(tk.CTkScrollableFrame):
         Globals.Mode = choice
         print("Mode: ", choice)
 
-        SensorEmulator.Run()
-        Camera.Run()
-
-
     def EnableLogging(self):
         Globals.EnableLogging = not Globals.EnableLogging
         print("Enable Logging: ", Globals.EnableLogging)
