@@ -11,24 +11,6 @@ from .. import ProccessSensorData
 
 MODEL_PATH = "models/best.pt"
 DEVICE = "cuda:0"
-
-# ===============================
-# VIDEO SOURCE CONFIGURATION
-# ===============================
-
-CAMERA_INDEX = 0
-FRAME_WIDTH = 640
-FRAME_HEIGHT = 480
-
-# ===============================
-# PREDICTION PARAMETERS
-# ===============================
-
-CONFIDENCE_THRESHOLD = 0.1
-IOU_THRESHOLD = 0.8
-IMAGE_SIZE = 416
-
-SHOW_VIDEO = True  # Set to False to disable OpenCV window
 CLASSES_TO_DETECT = None  # Or [Globals.ClassID] if restricting detection
 
 # ===============================
@@ -45,9 +27,9 @@ model.to(DEVICE)
 def DetectionLoop():
     print("Camera Being Initialized")
     
-    cap = cv2.VideoCapture(CAMERA_INDEX, cv2.CAP_DSHOW)
-    cap.set(cv2.CAP_PROP_FRAME_WIDTH, FRAME_WIDTH)
-    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, FRAME_HEIGHT)
+    cap = cv2.VideoCapture(Globals.CAMERA_INDEX, cv2.CAP_DSHOW)
+    cap.set(cv2.CAP_PROP_FRAME_WIDTH, Globals.FRAME_WIDTH)
+    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, Globals.FRAME_HEIGHT)
 
     if not cap.isOpened():
         print("❌ Failed to open video source.")
@@ -60,11 +42,11 @@ def DetectionLoop():
 
         results = model.predict(
             source=frame,
-            conf=CONFIDENCE_THRESHOLD,
-            iou=IOU_THRESHOLD,
+            conf=Globals.CONFIDENCE_THRESHOLD,
+            iou=Globals.IOU_THRESHOLD,
             classes=CLASSES_TO_DETECT,
             device=DEVICE,
-            imgsz=IMAGE_SIZE,
+            imgsz=Globals.IMAGE_SIZE,
             verbose=False,
             stream=False,
         )
@@ -81,7 +63,7 @@ def DetectionLoop():
         ProccessSensorData.SensorData(detected)
 
         # Optionally display annotated frame
-        if SHOW_VIDEO:
+        if Globals.SHOW_VIDEO:
             frame_with_boxes = result.plot()
             cv2.imshow("YOLOv8 Detection", frame_with_boxes)
             if cv2.waitKey(1) in [27, ord('q')]:  # ESC or Q to quit display
