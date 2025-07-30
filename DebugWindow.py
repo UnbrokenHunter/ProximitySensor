@@ -1,9 +1,7 @@
 import customtkinter as tk
 import Globals
-import Sensor
 import SensorEmulator
 import Camera
-import MotionSensor
 
 class Frame(tk.CTkScrollableFrame):  
     def __init__(self, master, **kwargs):
@@ -15,8 +13,6 @@ class Frame(tk.CTkScrollableFrame):
         print("Mode: ", choice)
 
         SensorEmulator.Run()
-        Sensor.Run()
-        MotionSensor.Run()
         Camera.Run()
 
 
@@ -61,7 +57,7 @@ class Frame(tk.CTkScrollableFrame):
         self.title.pack(padx=(10, 40), pady=10, fill="x")
 
         self.mode = tk.CTkComboBox(master=self, 
-                                     values=["Camera", "Sensor", "Motion Sensor", "Sensor Emulator"],
+                                     values=["Camera", "Sensor Emulator"],
                                      command=self.Mode)
         self.mode.grid(row=1, column=0, columnspan=2, padx=10, pady=5, sticky="ew")
 
