@@ -2,6 +2,7 @@ import time
 import threading
 
 from . import Globals
+from .utils import TimeUtils
 from .sensors import Camera
 from .sensors import SensorEmulator
 from .sheets import Sheets
@@ -21,7 +22,7 @@ def SaveLap():
 
     # If __ then Lap is probably not accurate
     if Globals.CurrentLapTime < Globals.MinLapTime and Globals.LapFilters == True:
-        print(f"Lap with time of {Globals.FormatTime(Globals.CurrentLapTime)} likely fraudulent. It has been disqualified.")
+        print(f"Lap with time of {TimeUtils.FormatTime(Globals.CurrentLapTime)} likely fraudulent. It has been disqualified.")
         return
     
     if timeSinceLastFalse > Globals.TimeSinceLastFalseThreshold and Globals.LapFilters == True:
