@@ -12,46 +12,30 @@ class Scrollable(tk.CTkScrollableFrame):
         self.itemList = []
 
     def addItem(self, LapCount, Driver, DistanceDriven, LastLapTime):
-            size = 13
-            padding = 10
+        size = 13
+        padding = 10
 
-            self.titleFrame = tk.CTkFrame(master=self)
-            self.titleFrame.pack(padx=10, pady=5, fill="x")
+        # Create lap row frame
+        row = tk.CTkFrame(master=self)
+        row.grid_columnconfigure((0, 1, 2, 3), weight=1)
+        row.pack(fill="x", padx=10, pady=5)
 
-            # Lap Count
-            self.titleFrame.lapCountLabel = tk.CTkLabel(master=self.titleFrame, text="Lap Count:", justify="left", anchor="w", font=("Helvetica", size))
-            self.titleFrame.lapCountLabel.grid(row=(LapCount * 2), column=0, padx=padding, pady=(3, 0),)
+        def make_pair(label_text, value_text, col):
+            tk.CTkLabel(row, text=label_text, anchor="w", font=("Helvetica", size)).grid(row=0, column=col, sticky="w", padx=padding)
+            tk.CTkLabel(row, text=value_text, anchor="w", font=("Helvetica", size)).grid(row=1, column=col, sticky="w", padx=padding)
 
-            self.titleFrame.lapCount = tk.CTkLabel(master=self.titleFrame, text=f"{LapCount}", justify="left", anchor="w", font=("Helvetica", size))
-            self.titleFrame.lapCount.grid(row=(LapCount * 2) + 1, column=0, padx=padding, pady=(0, 3),)
+        make_pair("Lap Count:", str(LapCount), 0)
+        make_pair("Driver:", str(Driver), 1)
+        make_pair("Distance:", str(DistanceDriven), 2)
+        make_pair("Lap Time:", str(LastLapTime), 3)
 
-            # Driver
-            self.titleFrame.lapCountLabel = tk.CTkLabel(master=self.titleFrame, text="Driver:", justify="left", anchor="w", font=("Helvetica", size))
-            self.titleFrame.lapCountLabel.grid(row=(LapCount * 2), column=1, padx=padding, pady=(3, 0),)
+        # Insert new row at top
+        self.itemList.insert(0, row)
 
-            self.titleFrame.lapCount = tk.CTkLabel(master=self.titleFrame, text=f"{Driver}", justify="left", anchor="w", font=("Helvetica", size))
-            self.titleFrame.lapCount.grid(row=(LapCount * 2) + 1, column=1, padx=padding, pady=(0, 3),)
-
-            # Distance Driven
-            self.titleFrame.distanceDrivenLabel = tk.CTkLabel(master=self.titleFrame, text="Distance:", justify="left", anchor="w", font=("Helvetica", size))
-            self.titleFrame.distanceDrivenLabel.grid(row=(LapCount * 2), column=2, padx=padding, pady=(3, 0),)
-
-            self.titleFrame.distanceDriven = tk.CTkLabel(master=self.titleFrame, text=f"{DistanceDriven}", justify="left", anchor="w", font=("Helvetica", size))
-            self.titleFrame.distanceDriven.grid(row=(LapCount * 2) + 1, column=2, padx=padding, pady=(0, 3),)
-
-            # Last Lap Time
-            self.titleFrame.lastLapTimeLabel = tk.CTkLabel(master=self.titleFrame, text="Lap Time:", justify="left", anchor="w", font=("Helvetica", size))
-            self.titleFrame.lastLapTimeLabel.grid(row=(LapCount * 2), column=3, padx=padding, pady=(3, 0),)
-
-            self.titleFrame.lastLapTime = tk.CTkLabel(master=self.titleFrame, text=f"{LastLapTime}", justify="left", anchor="w", font=("Helvetica", size))
-            self.titleFrame.lastLapTime.grid(row=(LapCount * 2) + 1, column=3, padx=padding, pady=(0, 3))
-
-            self.itemList.append(self.titleFrame)
-
-            index = len(self.itemList)
-            for item in self.itemList:
-                item.grid(row=index)
-                index -= 1
+        # Remove oldest row if more than 5
+        if len(self.itemList) > 5:
+            oldest = self.itemList.pop()
+            oldest.pack_forget()  # Hide it from the layout
 
 class Frame(tk.CTkFrame):   
     def __init__(self, master, **kwargs):
@@ -60,62 +44,51 @@ class Frame(tk.CTkFrame):
         self.LapCount = 0
         padding = 10
 
-        self.timeFrame = tk.CTkFrame(master=self)
-        self.timeFrame.pack(fill="both", padx=padding, pady=(3, 3))
+        # ========== TIMER LABELS ==========
+        self.timeFrame = tk.CTkFrame(self)
+        self.timeFrame.pack(fill="both", padx=padding, pady=3)
 
-        # Time
-        self.timeLabel = tk.CTkLabel(master=self.timeFrame, text="Timer:", font=("Helvetica", 40, "italic"))
-        self.timeLabel.grid(row=0, column=0, padx=padding, pady=(5, 3))
+        self.timeLabel = tk.CTkLabel(self.timeFrame, text="Timer:", font=("Helvetica", 40, "italic"))
+        self.timeLabel.grid(row=0, column=0, padx=padding, pady=5)
 
-        self.time = tk.CTkLabel(master=self.timeFrame, text="None", font=("Helvetica", 40, "italic"))
-        self.time.grid(row=0, column=1, padx=padding, pady=(5, 3))
+        self.time = tk.CTkLabel(self.timeFrame, text="None", font=("Helvetica", 40, "italic"))
+        self.time.grid(row=0, column=1, padx=padding, pady=5)
 
-        self.frame = tk.CTkFrame(master=self)
-        self.frame.pack(fill="both", padx=padding, pady=(3, 3))
+        # ========== STAT LABELS ==========
+        self.frame = tk.CTkFrame(self)
+        self.frame.pack(fill="both", padx=padding, pady=3)
 
-        # Average Lap Time
-        self.currentLapTimeLabel = tk.CTkLabel(master=self.frame, text="Current Lap:", justify="left", anchor="w", font=("Helvetica", 20))
-        self.currentLapTimeLabel.grid(row=0, column=0, padx=padding, pady=7)
+        def label_row(text, row, ref):
+            tk.CTkLabel(self.frame, text=text, anchor="w", font=("Helvetica", 20)).grid(row=row, column=0, padx=padding, pady=7)
+            label = tk.CTkLabel(self.frame, text="No Laps", anchor="e", font=("Helvetica", 20))
+            label.grid(row=row, column=1, padx=padding, pady=7)
+            setattr(self, ref, label)
 
-        self.currentLapTime = tk.CTkLabel(master=self.frame, text="No Laps", justify="right", anchor="e", font=("Helvetica", 20))
-        self.currentLapTime.grid(row=0, column=1, padx=padding, pady=7)
+        label_row("Current Lap:", 0, "currentLapTime")
+        label_row("Average Lap:", 1, "averageLapTime")
+        label_row("Projected Time Left:", 2, "projectedEndTime")
 
-        # Average Lap Time
-        self.averageLapTimeLabel = tk.CTkLabel(master=self.frame, text="Average Lap:", justify="left", anchor="w", font=("Helvetica", 20))
-        self.averageLapTimeLabel.grid(row=1, column=0, padx=padding, pady=7)
-
-        self.averageLapTime = tk.CTkLabel(master=self.frame, text="No Laps", justify="right", anchor="e", font=("Helvetica", 20))
-        self.averageLapTime.grid(row=1, column=1, padx=padding, pady=7)
-
-        # Projected End Time
-        self.projectedEndTimeLabel = tk.CTkLabel(master=self.frame, text="Projected Time Left:", justify="left", anchor="w", font=("Helvetica", 20))
-        self.projectedEndTimeLabel.grid(row=2, column=0, padx=padding, pady=7)
-
-        self.projectedEndTime = tk.CTkLabel(master=self.frame, text="00:00:00", justify="right", anchor="e", font=("Helvetica", 20))
-        self.projectedEndTime.grid(row=2, column=1, padx=padding, pady=7)
-
-        self.scrollable = Scrollable(master=self)
+        # ========== SCROLLABLE PANEL ==========
+        self.scrollable = Scrollable(self)
         self.scrollable.pack(fill="both", expand=True, padx=padding, pady=10)
 
+        # ========== UPDATE LOOP ==========
         def Update():
             while True:
                 if self.LapCount != Globals.LapCount:
                     self.LapCount = Globals.LapCount
-                    self.scrollable.addItem(Globals.LapCount, 
-                                            Statistics.GetCurrentDriver(), 
-                                            str(round(Statistics.GetDistanceDriven(), 2)), 
-                                            TimeUtils.FormatTime(Statistics.GetLastLapTime()))
-                    
+                    self.scrollable.addItem(
+                        Globals.LapCount,
+                        Statistics.GetCurrentDriver(),
+                        f"{Statistics.GetDistanceDriven():.2f}",
+                        TimeUtils.FormatTime(Statistics.GetLastLapTime())
+                    )
+
                 self.time.configure(text=TimeUtils.FormatTime(time.time() - Globals.StartTime))
                 self.currentLapTime.configure(text=TimeUtils.FormatTime(Globals.CurrentLapTime))
                 self.averageLapTime.configure(text=TimeUtils.FormatTime(Statistics.GetAverageLapTime()))
                 self.projectedEndTime.configure(text=TimeUtils.FormatTime(Statistics.GetProjectedEndTime()))
 
-                time.sleep(Globals.UIDelay)  # Delay for half a second
+                time.sleep(Globals.UIDelay)
 
-        # self.update = tk.CTkButton(master=self, text="Update", command=Update, height=50, font=("Helvetica", 20))
-        # self.update.grid(row=5, column=0, padx=(10, 10), pady=30, sticky="ew")
-
-        updateUIThread = threading.Thread(target=Update, daemon=True)
-        updateUIThread.start()
-
+        threading.Thread(target=Update, daemon=True).start()

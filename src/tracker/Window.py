@@ -14,7 +14,7 @@ class App(tk.CTk):
 
         self.grid_rowconfigure(0, weight=1)  # configure grid system
         self.grid_columnconfigure(0, weight=1)
-        self.grid_columnconfigure(1, weight=3)
+        self.grid_columnconfigure(1, weight=1)
         self.grid_columnconfigure(2, weight=1)
 
         self.frame = TitleWindow.Frame(master=self)
