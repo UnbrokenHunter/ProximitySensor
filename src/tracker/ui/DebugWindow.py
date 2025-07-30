@@ -1,99 +1,102 @@
 import customtkinter as tk
 
 from .. import Globals
-from ..sensors import SensorEmulator
-from ..sensors import Camera
+from ..sensors import SensorEmulator, Camera
 
-class Frame(tk.CTkScrollableFrame):  
+
+class Frame(tk.CTkScrollableFrame):
     def __init__(self, master, **kwargs):
         super().__init__(master, **kwargs)
-        self.CreateUI()
 
-    def Mode(self, choice):
-        Globals.Mode = choice
-        print("Mode: ", choice)
+        self.grid_columnconfigure(0, weight=1)
+        self.grid_columnconfigure(1, weight=1)
 
-    def EnableLogging(self):
-        Globals.EnableLogging = not Globals.EnableLogging
-        print("Enable Logging: ", Globals.EnableLogging)
+        # Title
+        self.titleFrame = tk.CTkFrame(master=self, fg_color="#1F6AA5")
+        self.titleFrame.grid(row=0, column=0, columnspan=2, padx=10, pady=7, sticky="nsew")
 
-    def Pin(self):
-        Globals.Pin = int(self.pinEntry.get())
-        print("Pin: ", Globals.Pin)
+        self.title = tk.CTkLabel(
+            master=self.titleFrame,
+            text="Debug:",
+            justify="left",
+            anchor="w",
+            font=("Helvetica", 40, "italic", "normal")
+        )
+        self.title.pack(side="left", padx=10, pady=7)
 
-    def Delay(self):
-        Globals.SensorDelay = float(self.delayEntry.get())
-        print("Delay: ", Globals.SensorDelay)
-
-    def UIDelay(self):
-        Globals.UIDelay = float(self.uidelayEntry.get())
-        print("UI Delay: ", Globals.UIDelay)
-
-    def MinLapTime(self):
-        Globals.MinLapTime = float(self.minLapTimeEntry.get())
-        print("Min Lap Time: ", Globals.MinLapTime)
-
-    def BrokenSensorDetection(self):
-        Globals.TimeSinceLastFalseThreshold = int(self.brokenSensorEntry.get())
-        print("Broken Sensor: ", Globals.TimeSinceLastFalseThreshold)
-
-    def ControlsLapCount(self, choice):
-        Globals.ControlsLapCount = choice
-        print("Controls Lap Count: ", Globals.ControlsLapCount)
-
-    def ManualSetStartTime(self):
-        Globals.StartTime = float(self.manualStartTime.get())
-        Globals.ManualTimeSet = True
-        print("Start Time: ", Globals.StartTime)
-
-    def CreateUI(self):
-        self.titleFrame = tk.CTkFrame(master=self)
-        self.titleFrame.grid(row=0, column=0, columnspan=2, padx=(10, 10), pady=7, sticky="ew")
-
-        self.title = tk.CTkLabel(master=self.titleFrame, text="Debug:", justify="left", anchor="w",font=("Helvetica", 40, "italic", "normal"))
-        self.title.pack(padx=(10, 40), pady=10, fill="x")
-
-        self.mode = tk.CTkComboBox(master=self, 
-                                     values=["Camera", "Sensor Emulator"],
-                                     command=self.Mode)
+        # Mode ComboBox
+        self.mode = tk.CTkComboBox(
+            master=self,
+            values=["Camera", "Sensor Emulator"],
+            command=lambda choice: (
+                setattr(Globals, "Mode", choice),
+                print("Mode:", choice),
+                SensorEmulator.Run() if choice == "Sensor Emulator" else Camera.Run()
+            )
+        )
         self.mode.grid(row=1, column=0, columnspan=2, padx=10, pady=5, sticky="ew")
+        self.mode.set(Globals.Mode)
 
-        self.delayEntry = tk.CTkEntry(master=self, placeholder_text=f"Delay: {Globals.SensorDelay}s", height=40, font=("Helvetica", 20))
-        self.delayEntry.grid(row=3, column=0, padx=(10, 5), pady=5)
+        # Min Lap Time Entry
+        self.minLapTimeEntry = tk.CTkEntry(
+            master=self,
+            placeholder_text=f"Min Lap: {Globals.MinLapTime}s",
+            height=40,
+            font=("Helvetica", 20)
+        )
+        self.minLapTimeEntry.grid(row=2, column=0, columnspan=2, padx=10, pady=5, sticky="ew")
+        self.minLapTimeEntry.bind("<FocusOut>", lambda e: self.apply_min_lap_time())
 
-        self.delayButton = tk.CTkButton(master=self, text="Select Delay", command=self.Delay, height=40, font=("Helvetica", 20))
-        self.delayButton.grid(row=3, column=1, padx=(5, 10), pady=5)
+        # Broken Sensor Threshold Entry
+        self.brokenSensorEntry = tk.CTkEntry(
+            master=self,
+            placeholder_text=f"Broken Sensor: {Globals.TimeSinceLastFalseThreshold}s",
+            height=40,
+            font=("Helvetica", 20)
+        )
+        self.brokenSensorEntry.grid(row=3, column=0, columnspan=2, padx=10, pady=5, sticky="ew")
+        self.brokenSensorEntry.bind("<FocusOut>", lambda e: self.apply_broken_sensor())
 
-        self.uidelayEntry = tk.CTkEntry(master=self, placeholder_text=f"UI Delay: {Globals.SensorDelay}s", height=40, font=("Helvetica", 20))
-        self.uidelayEntry.grid(row=4, column=0, padx=(10, 5), pady=5)
+        # Enable Logging Checkbox
+        self.enableLoggingCheck = tk.CTkCheckBox(
+            master=self,
+            text="Enable Logging",
+            command=lambda: (
+                setattr(Globals, "EnableLogging", self.enableLoggingCheck.get() == 1),
+                print("Enable Logging:", Globals.EnableLogging)
+            ),
+            height=40,
+            font=("Helvetica", 20)
+        )
+        self.enableLoggingCheck.grid(row=4, column=0, columnspan=2, padx=10, pady=5, sticky="ew")
+        self.enableLoggingCheck.select() if Globals.EnableLogging else self.enableLoggingCheck.deselect()
 
-        self.uidelayButton = tk.CTkButton(master=self, text="Select Delay", command=self.Delay, height=40, font=("Helvetica", 20))
-        self.uidelayButton.grid(row=4, column=1, padx=(5, 10), pady=5)
+        # Lap Control Mode ComboBox
+        self.controlsLaps = tk.CTkComboBox(
+            master=self,
+            values=["Local", "Google"],
+            command=lambda choice: (
+                setattr(Globals, "ControlsLapCount", choice),
+                print("Controls Lap Count:", choice)
+            )
+        )
+        self.controlsLaps.grid(row=5, column=0, columnspan=2, padx=10, pady=5, sticky="ew")
+        self.controlsLaps.set(Globals.ControlsLapCount)
 
-        self.minLapTimeEntry = tk.CTkEntry(master=self, placeholder_text=f"Min Lap: {Globals.MinLapTime}s", height=40, font=("Helvetica", 20))
-        self.minLapTimeEntry.grid(row=5, column=0, padx=(10, 5), pady=5)
+    def apply_min_lap_time(self):
+        text = self.minLapTimeEntry.get().strip()
+        if text:
+            try:
+                Globals.MinLapTime = float(text)
+                print("Min Lap Time:", Globals.MinLapTime)
+            except ValueError:
+                print("Invalid Min Lap Time entry")
 
-        self.minLapTimeBtn = tk.CTkButton(master=self, text="Select Time", command=self.MinLapTime, height=40, font=("Helvetica", 20))
-        self.minLapTimeBtn.grid(row=5, column=1, padx=(5, 10), pady=5)
-
-
-        self.brokenSensorEntry = tk.CTkEntry(master=self, placeholder_text=f"Broken Sensor: {Globals.TimeSinceLastFalseThreshold}s", height=40, font=("Helvetica", 20))
-        self.brokenSensorEntry.grid(row=6, column=0, padx=(10, 5), pady=5)
-
-        self.brokenSensorBtn = tk.CTkButton(master=self, text="Select Value", command=self.BrokenSensorDetection, height=40, font=("Helvetica", 20))
-        self.brokenSensorBtn.grid(row=6, column=1, padx=(5, 10), pady=5)
-
-        self.enableLoggingCheck = tk.CTkCheckBox(master=self, text="Enable Logging", command=self.EnableLogging, height=40, font=("Helvetica", 20))
-        self.enableLoggingCheck.deselect()
-        self.enableLoggingCheck.grid(row=7, column=0, columnspan=2, padx=(5, 10), pady=5, sticky="ew")
-
-        self.controlsLaps = tk.CTkComboBox(master=self, 
-                                     values=["Local", "Google"],
-                                     command=self.ControlsLapCount)
-        self.controlsLaps.grid(row=8, column=0, columnspan=2, padx=10, pady=5, sticky="ew")
-
-        self.manualStartTime = tk.CTkEntry(master=self, placeholder_text=f"Start Time: {Globals.StartTime}s", height=40, font=("Helvetica", 20))
-        self.manualStartTime.grid(row=9, column=0, padx=(10, 5), pady=5)
-
-        self.manualStartTimeBtn = tk.CTkButton(master=self, text="Set Time", command=self.ManualSetStartTime, height=40, font=("Helvetica", 20))
-        self.manualStartTimeBtn.grid(row=9, column=1, padx=(5, 10), pady=5)
+    def apply_broken_sensor(self):
+        text = self.brokenSensorEntry.get().strip()
+        if text:
+            try:
+                Globals.TimeSinceLastFalseThreshold = int(text)
+                print("Broken Sensor Threshold:", Globals.TimeSinceLastFalseThreshold)
+            except ValueError:
+                print("Invalid Broken Sensor Threshold entry")

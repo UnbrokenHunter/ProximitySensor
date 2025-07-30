@@ -32,8 +32,6 @@ RecordRequirement = 825055 # Meters
 
 # Debug
 Mode = "Camera"
-UIDelay = 0.5
-SensorDelay = 0.1
 ControlsLapCount = "Local"
 
 # ===============================
