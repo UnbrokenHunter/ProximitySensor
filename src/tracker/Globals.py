@@ -21,6 +21,8 @@ Drivers = ["Mac Spear", "Mitchell Wolken", "Josh Wagner",
 LapCount = 0
 CurrentLapTime = 0
 LastLapTime = 0
+LastLapInfo = None
+OfflineLaps = []  # List of lap times not yet saved to Google Sheets
 
 # Statics
 StartTime = time.time()
@@ -34,6 +36,7 @@ RecordRequirement = 825055 # Meters
 Mode = "Camera"
 ControlsLapCount = "Local"
 UIDelay = 0.5
+EmulateGoogleSheetsFailure = False
 
 # ===============================
 # VIDEO SOURCE CONFIGURATION
