@@ -43,6 +43,8 @@ model.to(DEVICE)
 # ===============================
 
 def DetectionLoop():
+    print("Camera Being Initialized")
+    
     cap = cv2.VideoCapture(CAMERA_INDEX, cv2.CAP_DSHOW)
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, FRAME_WIDTH)
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, FRAME_HEIGHT)

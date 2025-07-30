@@ -5,6 +5,8 @@ from .. import ProccessSensorData
 from .. import Globals
 
 def ReadData():
+    print("Sensor Emulator Being Initialized")
+
     trackPosition = 0
     trackLength = 20
 
