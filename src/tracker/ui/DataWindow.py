@@ -26,7 +26,7 @@ class Scrollable(tk.CTkScrollableFrame):
 
         make_pair("Lap Count:", str(LapCount), 0)
         make_pair("Driver:", str(Driver), 1)
-        make_pair("Distance:", str(DistanceDriven), 2)
+        make_pair("Distance:", f"{float(DistanceDriven) / 1000:.2f} km", 2)
         make_pair("Lap Time:", str(LastLapTime), 3)
 
         # Insert new row at top

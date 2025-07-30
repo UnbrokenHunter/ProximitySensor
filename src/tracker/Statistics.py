@@ -22,7 +22,7 @@ def GetCurrentDriver():
 
 def GetProjectedEndTime():
     distanceToGo = Globals.RecordRequirement - GetDistanceDriven()
-    lapsToGo = distanceToGo / (Globals.TrackLength * 1000) # km to meters
+    lapsToGo = distanceToGo / Globals.TrackLength
     projectedTime = lapsToGo * GetAverageLapTime()
     return projectedTime
 

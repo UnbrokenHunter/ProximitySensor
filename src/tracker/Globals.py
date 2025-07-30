@@ -27,7 +27,7 @@ StartTime = time.time()
 RealStart = False # Has Enable Tracking Been Enabled Before
 ManualTimeSet = False # Has Enable Tracking Been Enabled Before
 CarLength = 0.2 # Meters
-TrackLength = 0.4 # 0.4km
+TrackLength = 400 # 400m
 RecordRequirement = 825055 # Meters
 
 # Debug
