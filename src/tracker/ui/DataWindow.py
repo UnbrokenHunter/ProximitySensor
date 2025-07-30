@@ -18,7 +18,6 @@ class Scrollable(tk.CTkScrollableFrame):
         # Create lap row frame
         row = tk.CTkFrame(master=self)
         row.grid_columnconfigure((0, 1, 2, 3), weight=1)
-        row.pack(fill="x", padx=10, pady=5)
 
         def make_pair(label_text, value_text, col):
             tk.CTkLabel(row, text=label_text, anchor="w", font=("Helvetica", size)).grid(row=0, column=col, sticky="w", padx=padding)
@@ -29,13 +28,18 @@ class Scrollable(tk.CTkScrollableFrame):
         make_pair("Distance:", f"{float(DistanceDriven) / 1000:.2f} km", 2)
         make_pair("Lap Time:", str(LastLapTime), 3)
 
-        # Insert new row at top
+        # Insert new row visually at the top
+        if self.itemList:
+            row.pack(fill="x", padx=10, pady=5, before=self.itemList[0])
+        else:
+            row.pack(fill="x", padx=10, pady=5)
+
         self.itemList.insert(0, row)
 
         # Remove oldest row if more than 5
         if len(self.itemList) > 5:
             oldest = self.itemList.pop()
-            oldest.pack_forget()  # Hide it from the layout
+            oldest.pack_forget()
 
 class Frame(tk.CTkFrame):   
     def __init__(self, master, **kwargs):
