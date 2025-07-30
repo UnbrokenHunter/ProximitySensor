@@ -91,7 +91,7 @@ class Frame(tk.CTkFrame):
             row.destroy()
         self.scrollable.itemList.clear()
 
-        laps = LocalSheets.get_last_n_laps()
+        laps = LocalSheets.get_last_n_laps()[::-1]  # Reverse to oldest first
         for lap in laps:
             self.scrollable.addItem(
                 lap["lap_count"],
