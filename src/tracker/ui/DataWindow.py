@@ -71,9 +71,9 @@ class Frame(tk.CTkFrame):
         self.frame.pack(fill="both", padx=padding, pady=3)
 
         def label_row(text, row, ref):
-            tk.CTkLabel(self.frame, text=text, anchor="w", font=("Helvetica", 20)).grid(row=row, column=0, padx=padding, pady=7)
-            label = tk.CTkLabel(self.frame, text="No Laps", anchor="e", font=("Helvetica", 20))
-            label.grid(row=row, column=1, padx=padding, pady=7)
+            tk.CTkLabel(self.frame, text=text, anchor="w", font=("Helvetica", 20)).grid(row=row, column=0, padx=padding, pady=7, sticky="w")
+            label = tk.CTkLabel(self.frame, text="No Laps", anchor="w", font=("Helvetica", 20))
+            label.grid(row=row, column=1, padx=padding, pady=7, sticky="w")
             setattr(self, ref, label)
 
         label_row("Current Lap:", 0, "currentLapTime")
@@ -92,6 +92,11 @@ class Frame(tk.CTkFrame):
                     self.currentLapTime.configure(text=TimeUtils.FormatTime(Globals.CurrentLapTime))
                     self.averageLapTime.configure(text=TimeUtils.FormatTime(Statistics.GetAverageLapTime()))
                     self.projectedEndTime.configure(text=TimeUtils.FormatTime(Statistics.GetProjectedEndTime()))
+                else: 
+                    self.time.configure(text="")
+                    self.currentLapTime.configure(text="")
+                    self.averageLapTime.configure(text="")
+                    self.projectedEndTime.configure(text="")
 
                 time.sleep(Globals.UIDelay)
 
