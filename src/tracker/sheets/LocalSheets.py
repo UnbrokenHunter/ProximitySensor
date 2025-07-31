@@ -10,7 +10,7 @@ import threading
 
 excel_lock = threading.Lock()
 
-SPREADSHEET_FILE_PATH = "sheets_backup.xlsx"
+SPREADSHEET_FILE_PATH = "runtime/sheets_backup.xlsx"
 SHEET_NAME = "Sheet1"
 
 def get_or_create_workbook(file_path):

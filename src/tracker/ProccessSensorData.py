@@ -18,7 +18,7 @@ lapStartTime = time.time()
 speedTrackerTimer = 0
 timeSinceLastFalse = 0
 
-OFFLINE_PATH = "offline_laps.json"
+OFFLINE_PATH = "runtime/offline_laps.json"
 
 def SaveLap():
     global lapStartTime

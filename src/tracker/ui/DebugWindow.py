@@ -31,9 +31,9 @@ class Frame(tk.CTkScrollableFrame):
         self.build_camera()
         
         # Set your file names here
-        self.file1 = "offline_laps.json"
-        self.file2 = "sheets_backup.xlsx"
-        self.file3 = "created.json"
+        self.file1 = "runtime/offline_laps.json"
+        self.file2 = "runtime/sheets_backup.xlsx"
+        self.file3 = "runtime/created.json"
 
         reset_btn = tk.CTkButton(
             master=self,

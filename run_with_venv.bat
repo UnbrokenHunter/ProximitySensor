@@ -1,11 +1,18 @@
 @echo off
 setlocal
 set VENV_DIR=.venv
+set RUNTIME_DIR=runtime
 
 :: Create venv if missing
 if not exist %VENV_DIR% (
     echo [INFO] Creating virtual environment...
     python -m venv %VENV_DIR%
+)
+
+:: Create runtime directory if missing
+if not exist %RUNTIME_DIR% (
+    echo [INFO] Creating runtime directory...
+    mkdir %RUNTIME_DIR%
 )
 
 :: Activate venv

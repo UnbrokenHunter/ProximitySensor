@@ -22,8 +22,8 @@ def get_service(timeout):
     def authenticate_and_build_service():
         """Authenticate and build the Google Sheets API service."""
         creds = None
-        if os.path.exists("token.json"):
-            creds = Credentials.from_authorized_user_file("token.json", SCOPES)
+        if os.path.exists("runtime/token.json"):
+            creds = Credentials.from_authorized_user_file("runtime/token.json", SCOPES)
         if not creds or not creds.valid:
             if creds and creds.expired and creds.refresh_token:
                 creds.refresh(Request())
@@ -31,7 +31,7 @@ def get_service(timeout):
                 flow = InstalledAppFlow.from_client_secrets_file(
                     "credentials.json", SCOPES)
                 creds = flow.run_local_server(port=0)
-            with open("token.json", "w") as token_file:
+            with open("runtime/token.json", "w") as token_file:
                 token_file.write(creds.to_json())
         
         service[0] = build("sheets", "v4", credentials=creds)

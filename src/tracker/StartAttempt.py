@@ -2,7 +2,7 @@ import os
 import json
 import time
 
-def ensure_timestamp_json(path="created.json"):
+def ensure_timestamp_json(path="runtime/created.json"):
     if not os.path.exists(path):
         created_time = time.time()
         data = {
@@ -16,7 +16,7 @@ def ensure_timestamp_json(path="created.json"):
         print(f"File already exists at {path}.")
 
 
-def read_timestamp_json(path="created.json"):
+def read_timestamp_json(path="runtime/created.json"):
     try:
         with open(path, "r") as f:
             data = json.load(f)
@@ -30,5 +30,5 @@ def read_timestamp_json(path="created.json"):
         print(f"File at {path} is not valid JSON.")
         return None
 
-def json_exists(path="created.json"):
+def json_exists(path="runtime/created.json"):
     return os.path.exists(path)
