@@ -104,8 +104,6 @@ def find_first_empty_cell_in_column(sheet_name):
             else:
                 print(f"All cells in column {column_letter} up to row {row_number} are filled. The first empty cell is at row {row_number + 1}")
             
-        if Globals.ControlsLapCount == "Google":
-            Globals.LapCount = int(row_number) - 1
         return f"{row_number}"
     except HttpError as err:
         print(err)

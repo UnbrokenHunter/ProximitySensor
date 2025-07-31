@@ -22,16 +22,12 @@ CurrentLapTime = 0
 OfflineLaps = []  # List of lap times not yet saved to Google Sheets
 
 # Statics
-StartTime = time.time()
-RealStart = False # Has Enable Tracking Been Enabled Before
-ManualTimeSet = False # Has Enable Tracking Been Enabled Before
 CarLength = 0.2 # Meters
 TrackLength = 400 # 400m
 RecordRequirement = 825055 # Meters
 
 # Debug
 Mode = "Camera"
-ControlsLapCount = "Local"
 UIDelay = 0.5
 EmulateGoogleSheetsFailure = False
 
