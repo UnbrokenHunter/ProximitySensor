@@ -33,6 +33,7 @@ class Frame(tk.CTkScrollableFrame):
         # Set your file names here
         self.file1 = "offline_laps.json"
         self.file2 = "sheets_backup.xlsx"
+        self.file3 = "created.json"
 
         reset_btn = tk.CTkButton(
             master=self,
@@ -69,17 +70,6 @@ class Frame(tk.CTkScrollableFrame):
         self.mode.grid(row=1, column=0, columnspan=2, padx=10, pady=5, sticky="ew")
         self.mode.set(Globals.Mode)
         
-        self.controlsLaps = tk.CTkComboBox(
-            master=self.general,
-            values=["Local", "Google"],
-            command=lambda choice: (
-                setattr(Globals, "ControlsLapCount", choice),
-                print("Controls Lap Count:", choice)
-            )
-        )
-        self.controlsLaps.grid(row=2, column=0, columnspan=2, padx=10, pady=5, sticky="ew")
-        self.controlsLaps.set(Globals.ControlsLapCount)
-
         self.enableLoggingCheck = tk.CTkCheckBox(
             master=self.general,
             text="Enable Logging",
@@ -234,7 +224,7 @@ class Frame(tk.CTkScrollableFrame):
 
     def reset_everything(self):
         # --- Delete files ---
-        for path in [self.file1, self.file2]:
+        for path in [self.file1, self.file2, self.file3]:
             try:
                 if os.path.exists(path):
                     os.remove(path)

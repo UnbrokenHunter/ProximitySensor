@@ -1,6 +1,7 @@
 import time
 
 from . import Globals
+from . import StartAttempt
 from .sheets import LocalSheets
 
 def GetDistanceDriven():
@@ -13,10 +14,13 @@ def GetLastLapTime():
     return LocalSheets.read_cell(LocalSheets.find_first_empty_cell_in_column() - 1, 'B')
         
 def GetAverageLapTime():
+    if not StartAttempt.json_exists():
+        return 0
+    
     if GetLapCount() == 0:
-        return (time.time() - Globals.StartTime)
+        return (time.time() - StartAttempt.read_timestamp_json()["created"])
     else:
-        return (time.time() - Globals.StartTime) / GetLapCount()
+        return (time.time() - StartAttempt.read_timestamp_json()["created"]) / GetLapCount()
         
 def GetCurrentDriver():
     return Globals.CurrentDriver

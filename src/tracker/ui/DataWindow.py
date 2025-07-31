@@ -7,6 +7,7 @@ from ..utils import TimeUtils
 from ..utils.event_bus import event_bus
 from .. import Globals
 from .. import Statistics
+from .. import StartAttempt
 
 class Scrollable(tk.CTkScrollableFrame):
     def __init__(self, master, **kwargs):
@@ -83,13 +84,14 @@ class Frame(tk.CTkFrame):
         self.scrollable = Scrollable(self)
         self.scrollable.pack(fill="both", expand=True, padx=padding, pady=10)
         
-                # ========== UPDATE LOOP ==========
+        # ========== UPDATE LOOP ==========
         def Update():
             while True:
-                self.time.configure(text=TimeUtils.FormatTime(time.time() - Globals.StartTime))
-                self.currentLapTime.configure(text=TimeUtils.FormatTime(Globals.CurrentLapTime))
-                self.averageLapTime.configure(text=TimeUtils.FormatTime(Statistics.GetAverageLapTime()))
-                self.projectedEndTime.configure(text=TimeUtils.FormatTime(Statistics.GetProjectedEndTime()))
+                if StartAttempt.json_exists():
+                    self.time.configure(text=TimeUtils.FormatTime(time.time() - StartAttempt.read_timestamp_json()["created"]))
+                    self.currentLapTime.configure(text=TimeUtils.FormatTime(Globals.CurrentLapTime))
+                    self.averageLapTime.configure(text=TimeUtils.FormatTime(Statistics.GetAverageLapTime()))
+                    self.projectedEndTime.configure(text=TimeUtils.FormatTime(Statistics.GetProjectedEndTime()))
 
                 time.sleep(Globals.UIDelay)
 
