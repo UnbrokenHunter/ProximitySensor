@@ -5,6 +5,7 @@ import os
 
 from . import Globals
 from . import Statistics
+from . import StartAttempt
 from .utils import TimeUtils
 from .utils.event_bus import event_bus
 from .sensors import Camera
@@ -100,7 +101,7 @@ def SensorData(value):
     if Globals.EnableLogging:
         print(value)
 
-    if Globals.TrackingEnabled:
+    if Globals.TrackingEnabled and StartAttempt.json_exists():
         global previousValue, lapStartTime, speedTrackerTimer, timeSinceLastFalse
 
         timeSinceLastFalse = timeSinceLastFalse + 1 if value else 0
