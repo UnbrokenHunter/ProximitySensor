@@ -68,3 +68,7 @@ token.json
 sheets_backup.xlsx
 offline_laps.json
 created.json
+models/yolov8m.pt
+models/yolov8n.pt
+models/yolov8x.pt
+models/yolov8s.pt
