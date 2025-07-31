@@ -6,6 +6,10 @@ from openpyxl import Workbook
 from .. import Globals
 from .. import Statistics
 
+import threading
+
+excel_lock = threading.Lock()
+
 SPREADSHEET_FILE_PATH = "sheets_backup.xlsx"
 SHEET_NAME = "Sheet1"
 
@@ -32,27 +36,31 @@ def get_or_create_workbook(file_path):
 
 def update_cell(row_number, column_letter, new_value):
     """Updates a specific cell in a spreadsheet."""
-    wb = get_or_create_workbook(SPREADSHEET_FILE_PATH)
-    sheet = wb[SHEET_NAME]
-    cell_reference = f"{column_letter}{row_number + 1}"
-    sheet[cell_reference] = new_value
-    wb.save(SPREADSHEET_FILE_PATH)
+    
+    with excel_lock:
+        wb = get_or_create_workbook(SPREADSHEET_FILE_PATH)
+        sheet = wb[SHEET_NAME]
+        cell_reference = f"{column_letter}{row_number + 1}"
+        sheet[cell_reference] = new_value
+        wb.save(SPREADSHEET_FILE_PATH)
     
     if Globals.EnableLogging:
         print(f"Updated local cell {cell_reference}.")
 
 def find_first_empty_cell_in_column(column_letter='A'):
     """Finds the first empty cell in a specified column of a local Excel sheet."""
-    wb = get_or_create_workbook(SPREADSHEET_FILE_PATH)
-    sheet = wb[SHEET_NAME]
-    column = column_letter.upper()  # Ensure the column letter is uppercase for consistency
     
-    row_number = 0
-    for row in sheet[column]:
-        if row.value is not None:
-            row_number += 1
-        else:
-            break
+    with excel_lock:
+        wb = get_or_create_workbook(SPREADSHEET_FILE_PATH)
+        sheet = wb[SHEET_NAME]
+        column = column_letter.upper()  # Ensure the column letter is uppercase for consistency
+        
+        row_number = 0
+        for row in sheet[column]:
+            if row.value is not None:
+                row_number += 1
+            else:
+                break
         
     if Globals.EnableLogging:
         # Log or handle the first empty cell's position as needed. For debugging, you might want to print it.
@@ -84,10 +92,12 @@ def SaveData(Min, LapTime):
 
 def read_cell(row_number, column_letter):
     """Reads a specific cell from the local spreadsheet."""
-    wb = get_or_create_workbook(SPREADSHEET_FILE_PATH)
-    sheet = wb[SHEET_NAME]
-    cell_reference = f"{column_letter.upper()}{row_number}"
-    value = sheet[cell_reference].value
+        
+    with excel_lock:
+        wb = get_or_create_workbook(SPREADSHEET_FILE_PATH)
+        sheet = wb[SHEET_NAME]
+        cell_reference = f"{column_letter.upper()}{row_number}"
+        value = sheet[cell_reference].value
     
     if Globals.EnableLogging:
         print(f"Read cell {cell_reference}: {value}")
@@ -95,21 +105,22 @@ def read_cell(row_number, column_letter):
     return value
 
 def get_last_n_laps(n=5):
-    wb = get_or_create_workbook(SPREADSHEET_FILE_PATH)
-    sheet = wb[SHEET_NAME]
-    data = []
+    with excel_lock:
+        wb = get_or_create_workbook(SPREADSHEET_FILE_PATH)
+        sheet = wb[SHEET_NAME]
+        data = []
 
-    max_row = sheet.max_row
-    headers = [cell.value for cell in sheet[1]]
-    
-    # Read last `n` rows excluding the header row
-    for i in range(max(2, max_row - n + 1), max_row + 1):
-        row = {
-            "lap_count": sheet[f"A{i}"].value,
-            "lap_time": sheet[f"B{i}"].value,
-            "driver": sheet[f"C{i}"].value,
-            "timestamp": sheet[f"D{i}"].value,
-        }
-        data.append(row)
+        max_row = sheet.max_row
+        headers = [cell.value for cell in sheet[1]]
+        
+        # Read last `n` rows excluding the header row
+        for i in range(max(2, max_row - n + 1), max_row + 1):
+            row = {
+                "lap_count": sheet[f"A{i}"].value,
+                "lap_time": sheet[f"B{i}"].value,
+                "driver": sheet[f"C{i}"].value,
+                "timestamp": sheet[f"D{i}"].value,
+            }
+            data.append(row)
 
     return data[::-1]  # Return in newest-to-oldest order
