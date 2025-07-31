@@ -35,6 +35,7 @@ class Frame(tk.CTkFrame):
                 command=lambda: (
                     StartAttempt.ensure_timestamp_json(),
                     self.startTime.configure(text=StartAttempt.read_timestamp_json()["created_human"]),
+                    self.startAttemptButton.grid_forget(),
                     print("Starting Attempt")
                 )
             )
