@@ -17,15 +17,11 @@ class Frame(tk.CTkFrame):
         self.titleFrame = tk.CTkFrame(master=self, fg_color="#1F6AA5")
         self.titleFrame.grid(row=0, column=0, columnspan=2, padx=10, pady=7, sticky="nsew")
 
-        self.title = tk.CTkLabel(master=self.titleFrame, text="Lap Tracker", justify="left", font=("Helvetica", 50, "italic", "normal"))
+        self.title = tk.CTkLabel(master=self.titleFrame, text="Tracker!", justify="left", font=("Helvetica", 50, "italic", "normal"))
         self.title.pack(side="left", padx=(10), pady=7)
 
-        self.startTime = tk.CTkLabel(master=self.titleFrame, text="", justify="right", font=("Helvetica", 20, "italic", "normal"))
+        self.startTime = tk.CTkLabel(master=self.titleFrame, text="", justify="right", font=("Helvetica", 15, "italic", "normal"))
         self.startTime.pack(anchor="ne", padx=(10), pady=7)
-
-        self.startTimeUnix = tk.CTkLabel(master=self.titleFrame, text="", justify="right", font=("Helvetica", 20, "italic", "normal"))
-        self.startTimeUnix.pack(anchor="se", padx=(10), pady=7)
-
 
         # Only show the button if the timestamp file doesn't exist
         if not StartAttempt.json_exists():
@@ -45,7 +41,7 @@ class Frame(tk.CTkFrame):
             self.startTime.configure(text=StartAttempt.read_timestamp_json()["created_human"])
 
         self.driverLabel = tk.CTkLabel(master=self, text="Current Driver: ", font=("Helvetica", 20))
-        self.driverLabel.grid(row=2, column=0, padx=10, pady=(10, 3), sticky="ew")
+        self.driverLabel.grid(row=2, column=0, padx=10, pady=(10, 3), sticky="w")
 
         self.driver = tk.CTkComboBox(
             master=self, 
@@ -69,7 +65,7 @@ class Frame(tk.CTkFrame):
             font=("Helvetica", 20)
         )
         self.enableTracking.deselect()
-        self.enableTracking.grid(row=4, column=0, padx=10, pady=3, sticky="ew")
+        self.enableTracking.grid(row=4, column=0, padx=10, pady=3, sticky="w")
 
         self.lapFilters = tk.CTkCheckBox(
             master=self,
@@ -82,7 +78,7 @@ class Frame(tk.CTkFrame):
             font=("Helvetica", 20)
         )
         self.lapFilters.select()
-        self.lapFilters.grid(row=5, column=0, padx=10, pady=3, sticky="ew")
+        self.lapFilters.grid(row=5, column=0, padx=10, pady=3, sticky="w")
 
         self.restartSensorButton = tk.CTkButton(self, text="Restart Sensor", command=ProccessSensorData.RestartSensor)
         self.restartSensorButton.grid(row=6, column=0, columnspan=2, padx=10, pady=3, sticky="ew")
