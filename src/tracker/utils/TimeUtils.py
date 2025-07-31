@@ -48,3 +48,9 @@ def ConvertToFormattedDate(unix_timestamp, format_str='%Y-%m-%d %H:%M:%S'):
     datetime_obj = datetime.datetime.fromtimestamp(unix_timestamp)
     formatted_date = datetime_obj.strftime(format_str)
     return formatted_date
+
+def FormatTimeDelta(seconds):
+    hours = int(abs(seconds) // 3600)
+    minutes = int((abs(seconds) % 3600) // 60)
+    direction = "under" if seconds > 0 else "over"
+    return f"{hours}h {minutes}m {direction}"

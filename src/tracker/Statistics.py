@@ -18,9 +18,15 @@ def GetAverageLapTime():
         return 0
     
     if GetLapCount() == 0:
-        return (time.time() - StartAttempt.read_timestamp_json()["created"])
+        return GetCurrentTime()
     else:
-        return (time.time() - StartAttempt.read_timestamp_json()["created"]) / GetLapCount()
+        return GetCurrentTime() / GetLapCount()
+
+def GetCurrentTime():
+    if not StartAttempt.json_exists():
+        return 0
+    
+    return time.time() - StartAttempt.read_timestamp_json()["created"]
         
 def GetCurrentDriver():
     return Globals.CurrentDriver
@@ -30,5 +36,11 @@ def GetProjectedEndTime():
     lapsToGo = distanceToGo / Globals.TrackLength
     projectedTime = lapsToGo * GetAverageLapTime()
     return projectedTime
+
+def GetProjectedRecordMargin():
+    total_time = GetProjectedEndTime() + GetCurrentTime()
+    target_time = 24 * 60 * 60  # 24 hours in seconds
+    margin = target_time - total_time  # Positive = time left, Negative = over time
+    return margin
 
 print("Stats Initalized")

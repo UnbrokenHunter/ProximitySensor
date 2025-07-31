@@ -78,7 +78,7 @@ class Frame(tk.CTkFrame):
 
         label_row("Current Lap:", 0, "currentLapTime")
         label_row("Average Lap:", 1, "averageLapTime")
-        label_row("Projected Time Left:", 2, "projectedEndTime")
+        label_row("Projected Record Margin:", 2, "projectedRecordMargin")
 
         # ========== SCROLLABLE PANEL ==========
         self.scrollable = Scrollable(self)
@@ -91,12 +91,12 @@ class Frame(tk.CTkFrame):
                     self.time.configure(text=TimeUtils.FormatTime(time.time() - StartAttempt.read_timestamp_json()["created"]))
                     self.currentLapTime.configure(text=TimeUtils.FormatTime(Globals.CurrentLapTime))
                     self.averageLapTime.configure(text=TimeUtils.FormatTime(Statistics.GetAverageLapTime()))
-                    self.projectedEndTime.configure(text=TimeUtils.FormatTime(Statistics.GetProjectedEndTime()))
+                    self.projectedRecordMargin.configure(text=TimeUtils.FormatTimeDelta(Statistics.GetProjectedRecordMargin()))
                 else: 
                     self.time.configure(text="")
                     self.currentLapTime.configure(text="")
                     self.averageLapTime.configure(text="")
-                    self.projectedEndTime.configure(text="")
+                    self.projectedRecordMargin.configure(text="")
 
                 time.sleep(Globals.UIDelay)
 
